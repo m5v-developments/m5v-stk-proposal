@@ -290,6 +290,57 @@
   .signoff .role { font-family: var(--mono); color: var(--ink-2); margin-top: 18px; }
   .signoff hr { height: 1px; background: var(--rule); margin: 80px 0 24px; }
   .footer-row { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); }
+
+  @media (max-width: 900px) {
+    .topbar .pages { display: none; }
+    .sec { padding: 80px 0 60px; }
+    .sec-head { flex-direction: column; gap: 12px; margin-bottom: 40px; }
+    .sec-num { font-size: clamp(80px, 18vw, 160px); }
+    .sec-eye .title { font-size: clamp(28px, 5vw, 48px); }
+    .hero-title { font-size: clamp(48px, 11vw, 96px) !important; }
+    .hero-title .l2 { padding-left: 4vw; }
+    .hero-title .l3 { font-size: 0.65em; }
+    .hero-num { display: none; }
+    .hero-meta { grid-template-columns: 1fr !important; gap: 16px; }
+    .stat-strip { grid-template-columns: 1fr 1fr; }
+    .stat-cell { min-height: 140px; padding: 24px 16px; }
+    .stat-cell .big { font-size: clamp(40px, 8vw, 68px); }
+    .stat-cell:nth-child(2n) { border-right: 0; }
+    .ptable .row { grid-template-columns: 1fr !important; gap: 6px; padding: 16px 0; }
+    .ptable .row.head { display: none; }
+    .ptable .prox { text-align: left; }
+    .ptable .idx { display: none; }
+    .demo-split { grid-template-columns: 1fr; }
+    .demo-col { border-right: 0; border-bottom: 1px solid var(--rule); }
+    .demo-col:last-child { border-bottom: 0; }
+    .money-grid { grid-template-columns: 1fr !important; }
+    .money-cell { border-right: 0 !important; }
+    .money-total { grid-template-columns: 1fr !important; }
+    .ribbon { grid-template-columns: 1fr !important; padding: 36px 24px; gap: 24px; }
+    .ribbon .stamp { transform: none; }
+    .deal-grid { grid-template-columns: 1fr; }
+    .deal-col { border-right: 0; border-bottom: 1px solid var(--rule); padding: 28px 20px; }
+    .deal-col:last-child { border-bottom: 0; }
+    .ask-grid { grid-template-columns: 1fr !important; }
+    .signoff .grid { grid-template-columns: 1fr !important; gap: 36px; }
+    .signoff .name { font-size: clamp(40px, 9vw, 64px); }
+    .closing-band { padding: 80px 0; }
+    .closing-band .big { font-size: clamp(44px, 10vw, 100px); }
+    .pull { font-size: clamp(22px, 4vw, 34px) !important; max-width: 100% !important; }
+    .footer-row { flex-direction: column; gap: 8px; }
+    .m-stack { grid-template-columns: 1fr !important; gap: 32px !important; }
+    .m-stack-tight { grid-template-columns: 1fr !important; gap: 8px !important; }
+    .m-2col { grid-template-columns: 1fr 1fr !important; gap: 20px !important; }
+    .m-steps { grid-template-columns: 1fr 1fr !important; gap: 20px !important; }
+  }
+  @media (max-width: 480px) {
+    .stat-strip { grid-template-columns: 1fr; }
+    .stat-cell { border-right: 0; }
+    .m-2col { grid-template-columns: 1fr !important; }
+    .m-steps { grid-template-columns: 1fr !important; }
+    .topbar .cta { padding: 8px 12px; font-size: 9px; }
+    .logo-tile { height: 26px; }
+  }
 </style>
 </head>
 <body style="background-color: rgb(16, 10, 1)">
@@ -361,11 +412,11 @@
     <div class="stat-strip rv rv-d1">
       <div class="stat-cell"><div class="big" data-count="5">5</div><div class="lbl">Active Communities · Niagara</div></div>
       <div class="stat-cell"><div class="big"><span data-count="600">600</span><sup>+</sup></div><div class="lbl">Homes Under Development</div></div>
-      <div class="stat-cell"><div class="big"><sup>$</sup><span data-count="279"></span><sup>M</sup></div><div class="lbl">Gross Revenue Pipeline</div></div>
-      <div class="stat-cell"><div class="big"><span data-count="302"></span><sup>K+</sup></div><div class="lbl">Combined Social Following</div></div>
+      <div class="stat-cell"><div class="big"><sup>$</sup><span data-count="279">279</span><sup>M</sup></div><div class="lbl">Gross Revenue Pipeline</div></div>
+      <div class="stat-cell"><div class="big"><span data-count="302">302</span><sup>K+</sup></div><div class="lbl">Combined Social Following</div></div>
     </div>
 
-    <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; margin-top: 100px;">
+    <div class="m-stack" style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; margin-top: 100px;">
       <div class="rv rv-d2">
         <p class="pull">M5V is Niagara's most active boutique developer. We have the most social media presence of any developer in the country. Across five communities we are delivering 600+ homes to a buyer who already lives like an STK regular.</p>
       </div>
@@ -391,7 +442,7 @@
       </div>
     </div>
 
-    <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: start;">
+    <div class="m-stack" style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: start;">
       <div class="rv rv-d1">
         <p class="pull">89% of our purchasers are from Toronto where they expect high end dining &amp; are willing to spend. They are looking for an experience which only STK  can offer in the Region.</p>
       </div>
@@ -402,19 +453,19 @@
       <div class="mono ember" style="margin-bottom: 18px;">
 </div>
       <div class="rv rv-d3" style="border-top: 1px solid var(--rule);">
-        <div style="display: grid; grid-template-columns: 200px 200px 1fr; gap: 32px; padding: 24px 0; border-bottom: 1px solid var(--rule); align-items: baseline;">
+        <div class="m-stack-tight" style="display: grid; grid-template-columns: 200px 200px 1fr; gap: 32px; padding: 24px 0; border-bottom: 1px solid var(--rule); align-items: baseline;">
           <div class="serif" style="font-size: 56px; color: var(--ember); font-style: italic; line-height: 1;">89%</div>
           <div class="serif" style="font-size: 32px; color: var(--ink-3); text-decoration: line-through; line-height: 1;">
 </div>
           <div style="color: var(--ink-2);">Purchasers from Toronto or GTA</div>
         </div>
-        <div style="display: grid; grid-template-columns: 200px 200px 1fr; gap: 32px; padding: 24px 0; border-bottom: 1px solid var(--rule); align-items: baseline;">
-          <div class="serif" style="font-size: 25px; color: var(--ember); font-style: italic; line-height: 1">Higest Price Per Square Foot In the Region</div>
+        <div class="m-stack-tight" style="display: grid; grid-template-columns: 200px 200px 1fr; gap: 32px; padding: 24px 0; border-bottom: 1px solid var(--rule); align-items: baseline;">
+          <div class="serif" style="font-size: 25px; color: var(--ember); font-style: italic; line-height: 1">Highest Price Per Square Foot In the Region</div>
           <div class="serif" style="font-size: 32px; color: var(--ink-3); text-decoration: line-through; line-height: 1;">
 </div>
           <div style="color: var(--ink-2);">M5V Development sells our product for the highest price per square foot in the Region</div>
         </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 32px; padding: 24px 0; border-bottom: 1px solid var(--rule); align-items: baseline;">
+        <div class="m-2col" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 32px; padding: 24px 0; border-bottom: 1px solid var(--rule); align-items: baseline;">
           <div><div class="serif" style="font-size: 44px; color: var(--paper); line-height: 1;">232K<sup style="color: var(--ember); font-size: 0.5em;">+</sup></div><div class="mono muted" style="margin-top: 10px;">Instagram followers</div></div>
           <div><div class="serif" style="font-size: 44px; color: var(--paper); line-height: 1;">70K<sup style="color: var(--ember); font-size: 0.5em;">+</sup></div><div class="mono muted" style="margin-top: 10px;">TikTok followers</div></div>
           <div><div class="serif" style="font-size: 44px; color: var(--paper); line-height: 1;">2M<sup style="color: var(--ember); font-size: 0.5em;">+</sup></div><div class="mono muted" style="margin-top: 10px;">Monthly organic reach</div></div>
@@ -495,7 +546,7 @@
       </div>
     </div>
 
-    <div class="rv rv-d3" style="margin-top: 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;">
+    <div class="rv rv-d3 m-stack" style="margin-top: 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;">
       <div class="serif it" style="font-size: clamp(36px, 4.4vw, 64px); line-height: 1.05;">
 We are bringing STK regulars.</div>
       <div style="border-top: 1px solid var(--ember); padding-top: 18px; color: var(--ink-2); line-height: 1.6; font-size: 17px;">Over 600 households, this effect compounds into a permanent, loyal customer cohort. Each closing is a behavioral anchor — STK becomes their default for occasions, client dinners, date nights.</div>
@@ -606,7 +657,7 @@ We are bringing STK regulars.</div>
       <div class="stat-cell"><div class="big">26.3<sup>K</sup></div><div class="lbl">Interactions · 30 Days</div></div>
     </div>
 
-    <div class="rv rv-d2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--rule); margin-bottom: 64px;">
+    <div class="rv rv-d2 m-stack" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--rule); margin-bottom: 64px;">
       <div style="padding: 36px 32px; border-right: 1px solid var(--rule);">
         <div class="mono ember" style="margin-bottom: 28px;">Gender Split</div>
         <div style="margin-bottom: 24px;">
@@ -641,7 +692,7 @@ We are bringing STK regulars.</div>
 
     <div class="rv rv-d2" style="padding: 36px 32px; border: 1px solid var(--rule); margin-bottom: 64px;">
       <div class="mono ember" style="margin-bottom: 22px;">Age Range</div>
-      <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 32px;">
+      <div class="m-2col" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 32px;">
         <div><div class="serif" style="font-size: 40px; color: var(--paper); line-height: 1;">2.1%</div><div class="mono muted" style="margin-top: 8px;">18–24</div></div>
         <div><div class="serif it ember" style="font-size: 56px; line-height: 1;">42.8%</div><div class="mono gold" style="margin-top: 8px;">25–34</div></div>
         <div><div class="serif it ember" style="font-size: 56px; line-height: 1;">29.1%</div><div class="mono gold" style="margin-top: 8px;">35–44</div></div>
@@ -651,7 +702,7 @@ We are bringing STK regulars.</div>
       <div class="muted" style="margin-top: 22px; font-size: 14px; line-height: 1.5;"><span class="gold">85.2%</span> of the audience sits in the 25–54 prime spend bracket — homebuyers and steakhouse regulars in one cohort.</div>
     </div>
 
-    <div class="rv rv-d3" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--rule); margin-bottom: 80px;">
+    <div class="rv rv-d3 m-stack" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--rule); margin-bottom: 80px;">
       <div style="padding: 36px 32px; border-right: 1px solid var(--rule);">
         <div class="mono ember" style="margin-bottom: 28px;">Top Country</div>
         <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px;"><span class="serif" style="font-size: 24px;">Canada</span><span class="serif it ember" style="font-size: 36px;">29.9%</span></div>
@@ -670,7 +721,7 @@ We are bringing STK regulars.</div>
       </div>
     </div>
 
-    <div class="rv rv-d3" style="border-top: 2px solid var(--ember); padding-top: 56px; display: grid; grid-template-columns: 1fr 1.4fr; gap: 56px; align-items: start;">
+    <div class="rv rv-d3 m-stack" style="border-top: 2px solid var(--ember); padding-top: 56px; display: grid; grid-template-columns: 1fr 1.4fr; gap: 56px; align-items: start;">
       <div>
         <div class="mono ember" style="margin-bottom: 16px;">The Operator</div>
         <h3 class="serif" style="font-size: clamp(40px, 5vw, 72px); line-height: 0.95; letter-spacing: -0.02em;">
@@ -741,7 +792,7 @@ We are bringing STK regulars.</div>
 
     <div class="rv rv-d4" style="margin-top: 100px;">
       <div class="mono muted" style="margin-bottom: 22px;">Proposed Next Steps</div>
-      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
+      <div class="m-steps" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
         <div style="border-top: 2px solid var(--ember); padding-top: 14px;"><div class="serif it ember" style="font-size: 34px; line-height: 1;">i.</div><div class="serif" style="font-size: 22px; margin-top: 12px; line-height: 1.2;">30-min meeting</div><div class="muted" style="margin-top: 8px; font-size: 14px;">M5V leadership and STK marketing align on format.</div></div>
         <div style="border-top: 2px solid var(--ember); padding-top: 14px;"><div class="serif it ember" style="font-size: 34px; line-height: 1;">ii.</div><div class="serif" style="font-size: 22px; margin-top: 12px; line-height: 1.2;">One-page MOU</div><div class="muted" style="margin-top: 8px; font-size: 14px;">Designation, rates, content. No legal complexity.</div></div>
         <div style="border-top: 2px solid var(--ember); padding-top: 14px;"><div class="serif it ember" style="font-size: 34px; line-height: 1;">iii.</div><div class="serif" style="font-size: 22px; margin-top: 12px; line-height: 1.2;">Create Special Offer for Purchasers</div><div class="muted" style="margin-top: 8px; font-size: 14px;">Merch or offers for new and current buyers</div></div>
