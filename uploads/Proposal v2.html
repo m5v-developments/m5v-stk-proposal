@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M5V × STK — Niagara Falls Partnership · v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700&family=Archivo:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0a07;
+    --bg-2: #16120c;
+    --bg-3: #221a10;
+    --paper: #f1ead8;
+    --ink: #f1ead8;
+    --ink-2: #c8bfa7;
+    --ink-3: #82765f;
+    --rule: #3a3122;
+    --oxblood: #8b1a1a;
+    --ember: #c52010;
+    --gold: #d3a04e;
+    --serif: 'Bodoni Moda', serif;
+    --sans: 'Archivo', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: var(--sans); font-weight: 400; font-size: 16px; line-height: 1.5;
+    overflow-x: hidden; -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--oxblood); color: var(--paper); }
+  img { display: block; max-width: 100%; }
+  hr { border: 0; }
+  .serif { font-family: var(--serif); font-weight: 400; }
+  .it { font-style: italic; }
+  .mono { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; }
+  .ember { color: var(--ember); }
+  .gold { color: var(--gold); }
+  .oxblood { color: var(--oxblood); }
+  .accent { color: var(--ember); }
+  .paper { color: var(--paper); }
+  .muted { color: var(--ink-3); }
+
+  /* Page chrome */
+  .edge-rail {
+    position: fixed; top: 50%; left: 18px; transform: translateY(-50%) rotate(-90deg); transform-origin: left center;
+    z-index: 40; pointer-events: none;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ink-3);
+    white-space: nowrap;
+  }
+  .edge-rail .dot { color: var(--ember); }
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 36px;
+    background: color-mix(in oklab, var(--bg) 70%, transparent);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s;
+  }
+  .topbar.on { border-bottom-color: var(--rule); }
+  .logo-pair { display: flex; align-items: center; gap: 12px; }
+  .logo-tile { background: #000; height: 32px; padding: 4px 8px; display: inline-flex; align-items: center; }
+  .logo-tile.m5v { background: #fff; }
+  .logo-tile img { height: 100%; width: auto; }
+  .topbar .pages { font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-3); }
+  .topbar .cta {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    background: var(--ember); color: var(--bg); border: 0; padding: 11px 18px; cursor: pointer; transition: background .2s;
+  }
+  .topbar .cta:hover { background: var(--gold); }
+
+  /* Layout */
+  .wrap { max-width: 1480px; margin: 0 auto; padding: 0 72px; }
+  @media (max-width: 900px) { .wrap { padding: 0 24px; } .topbar { padding: 14px 20px; } .edge-rail { display: none; } }
+  section { position: relative; }
+
+  /* Cinematic curtain hero */
+  #curtain {
+    min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between;
+    padding: 110px 0 56px; position: relative; overflow: hidden;
+  }
+  .marquee {
+    overflow: hidden; white-space: nowrap; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+    padding: 14px 0;
+    font-family: var(--serif); font-style: italic; font-size: clamp(28px, 3.4vw, 50px); color: var(--ember);
+  }
+  .marquee-track { display: inline-block; animation: marquee 36s linear infinite; will-change: transform; }
+  .marquee-track > span { padding: 0 .6em; }
+  .marquee-track > .star { color: var(--gold); }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  .hero-grid {
+    display: grid; grid-template-columns: 1fr; align-items: end;
+    padding-top: 60px;
+  }
+  .hero-title {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(96px, 16vw, 280px); line-height: 0.85; letter-spacing: -0.04em;
+    color: var(--paper);
+  }
+  .hero-title .l1 { display: block; }
+  .hero-title .l2 { display: block; padding-left: 12vw; }
+  .hero-title .l3 { display: block; text-align: right; }
+  .hero-num {
+    position: absolute; top: 20%; right: -3vw; pointer-events: none; user-select: none;
+    font-family: var(--serif); font-style: italic; font-size: clamp(420px, 56vw, 1000px); line-height: 0.8;
+    color: var(--oxblood); opacity: 0.18; letter-spacing: -0.05em;
+    z-index: 0;
+  }
+  .hero-meta {
+    position: relative; z-index: 2;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 80px;
+    border-top: 1px solid var(--rule); padding-top: 22px;
+  }
+  .hero-meta > div .mono { color: var(--ink-3); }
+  .hero-meta > div .v { font-family: var(--serif); font-size: 28px; margin-top: 8px; line-height: 1.1; }
+
+  /* Section frame */
+  .sec { padding: 140px 0 110px; position: relative; }
+  .sec.alt { background: var(--bg-2); }
+  .sec.paper-sec { background: var(--paper); color: #14110d; }
+  .sec.paper-sec ::selection { background: var(--oxblood); color: var(--paper); }
+  .sec.paper-sec .mono { color: #7a705c; }
+  .sec.paper-sec .muted { color: #6b614e; }
+  .sec.paper-sec .rule { background: #beb29a; }
+
+  .sec-head { display: flex; align-items: baseline; gap: 28px; margin-bottom: 64px; }
+  .sec-num {
+    font-family: var(--serif); font-size: clamp(160px, 22vw, 360px); font-style: italic; line-height: 0.8;
+    color: var(--ember); letter-spacing: -0.04em;
+  }
+  .sec-num.lite { color: var(--oxblood); }
+  .sec-num.flat { color: #1d1812; }
+  .sec-eye { flex: 1; border-bottom: 2px solid currentColor; padding-bottom: 14px; }
+  .sec-eye .label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; }
+  .sec-eye .title { font-family: var(--serif); font-size: clamp(36px, 5vw, 76px); line-height: 1; letter-spacing: -0.02em; margin-top: 16px; }
+  .sec-eye .title em { font-style: italic; color: var(--ember); }
+  .sec.paper-sec .sec-eye .title em { color: var(--oxblood); }
+
+  /* Reveal */
+  .rv { opacity: 0; transform: translateY(28px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
+  .rv.in { opacity: 1; transform: none; }
+  .rv-d1 { transition-delay: .08s; } .rv-d2 { transition-delay: .16s; } .rv-d3 { transition-delay: .26s; } .rv-d4 { transition-delay: .36s; }
+
+  /* Stat strip */
+  .stat-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .stat-cell { padding: 36px 28px; border-right: 1px solid var(--rule); position: relative; min-height: 220px; display: flex; flex-direction: column; justify-content: space-between; }
+  .stat-cell:last-child { border-right: 0; }
+  .stat-cell .big { font-family: var(--serif); font-size: clamp(68px, 7.5vw, 120px); line-height: 1; letter-spacing: -0.02em; color: var(--paper); }
+  .stat-cell .big sup { font-size: 0.45em; color: var(--ember); vertical-align: top; margin-left: 6px; }
+  .stat-cell:nth-child(2) .big sup { font-size: 0.45em; }
+  .stat-cell .lbl { font-family: var(--mono); color: var(--ink-3); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
+
+  /* Pull quote */
+  .pull {
+    font-family: var(--serif); font-style: italic; font-size: clamp(34px, 4.6vw, 72px); line-height: 1.05; letter-spacing: -0.015em;
+    color: var(--paper); max-width: 26ch;
+  }
+  .pull mark { background: transparent; color: var(--ember); }
+
+  /* Properties table */
+  .ptable { border-top: 1px solid var(--rule); }
+  .ptable .row {
+    display: grid; grid-template-columns: 70px 1.8fr 1fr .6fr .6fr;
+    gap: 18px; padding: 22px 0; border-bottom: 1px solid var(--rule); align-items: baseline;
+    transition: background .2s, padding-left .2s;
+  }
+  .ptable .row.head { padding: 12px 0; }
+  .ptable .row:hover:not(.head) { background: color-mix(in oklab, var(--ember) 8%, transparent); padding-left: 12px; }
+  .ptable .idx { font-family: var(--mono); color: var(--ink-3); }
+  .ptable .name { font-family: var(--serif); font-size: 24px; line-height: 1.15; }
+  .ptable .type { color: var(--ink-2); font-size: 14px; }
+  .ptable .units { font-family: var(--mono); color: var(--ink-2); }
+  .ptable .prox { font-family: var(--mono); color: var(--ember); text-align: right; }
+  .ptable .row.far .prox { color: var(--ink-3); }
+
+  /* Demographics split */
+  .demo-split { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--rule); }
+  .demo-col { padding: 36px 32px; border-right: 1px solid var(--rule); }
+  .demo-col:last-child { border-right: 0; background: var(--bg-3); }
+  .demo-col h4 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ember); margin-bottom: 24px; }
+  .demo-col .row { display: grid; grid-template-columns: 1fr; gap: 4px; padding: 18px 0; border-bottom: 1px solid var(--rule); }
+  .demo-col .row:last-child { border-bottom: 0; }
+  .demo-col .row .trait { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); }
+  .demo-col .row .val { font-family: var(--serif); font-size: 22px; line-height: 1.3; color: var(--paper); }
+
+  /* Money block */
+  .money-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 0; }
+  .money-cell { padding: 28px 24px; border-top: 1px solid var(--rule); border-right: 1px solid var(--rule); }
+  .money-cell:nth-child(3n) { border-right: 0; }
+  .money-cell .item { font-family: var(--serif); font-size: 22px; line-height: 1.15; }
+  .money-cell .aud { font-family: var(--mono); color: var(--ink-3); margin-top: 8px; }
+  .money-cell .price { font-family: var(--serif); font-style: italic; font-size: clamp(28px, 3vw, 42px); color: var(--ember); line-height: 1; }
+  .money-cell .basis { color: var(--ink-3); font-size: 13px; line-height: 1.5; }
+  .money-total { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 0; border-top: 2px solid var(--ember); border-bottom: 2px solid var(--ember); margin-top: 14px; }
+  .money-total > div { padding: 28px 24px; }
+  .money-total .lbl { font-family: var(--serif); font-style: italic; font-size: 34px; }
+  .money-total .sum { font-family: var(--serif); font-size: 44px; color: var(--ember); line-height: 1; }
+  .money-total .note { color: var(--ink-3); font-size: 13px; line-height: 1.5; }
+
+  /* Ribbon callout */
+  .ribbon {
+    background: var(--oxblood); color: var(--paper); padding: 56px 64px;
+    display: grid; grid-template-columns: 1fr auto; gap: 36px; align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .ribbon::before {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(135deg, transparent 0 24px, rgba(0,0,0,0.06) 24px 25px);
+    pointer-events: none;
+  }
+  .ribbon .copy { font-family: var(--serif); font-size: clamp(28px, 3.2vw, 48px); line-height: 1.1; font-style: italic; }
+  .ribbon .copy strong { font-style: normal; color: var(--gold); }
+  .ribbon .stamp {
+    border: 2px solid var(--paper); padding: 18px 24px; text-align: center; transform: rotate(-3deg);
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.24em;
+  }
+  .ribbon .stamp .big { font-family: var(--serif); font-size: 44px; display: block; letter-spacing: 0; margin-top: 4px; }
+
+  /* Deliverables */
+  .deal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .deal-col { padding: 36px 36px; border-right: 1px solid var(--rule); }
+  .deal-col:last-child { border-right: 0; background: var(--bg-3); }
+  .deal-col h4 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 22px; }
+  .deal-col.left h4 { color: var(--ember); }
+  .deal-col.right h4 { color: var(--gold); }
+  .deal-col .item { display: grid; grid-template-columns: 1fr auto; gap: 18px; padding: 18px 0; border-bottom: 1px solid var(--rule); align-items: baseline; }
+  .deal-col .item:last-child { border-bottom: 0; }
+  .deal-col .item .t { font-family: var(--serif); font-size: 19px; line-height: 1.3; }
+  .deal-col .item .v { font-family: var(--mono); color: var(--ember); white-space: nowrap; }
+  .deal-col.right .item .v { color: var(--gold); }
+
+  /* Secret word */
+  .sw-card {
+    background: linear-gradient(145deg, var(--bg-3), var(--bg-2));
+    border: 1px solid var(--rule); padding: 56px 48px; text-align: center; position: relative; overflow: hidden;
+  }
+  .sw-card::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center top, color-mix(in oklab, var(--ember) 25%, transparent), transparent 60%);
+    pointer-events: none;
+  }
+  .sw-word { font-family: var(--serif); font-style: italic; font-size: clamp(72px, 12vw, 180px); line-height: 1; color: var(--ember); position: relative; z-index: 1; }
+  .sw-meta { font-family: var(--mono); color: var(--ink-3); margin-top: 12px; position: relative; z-index: 1; }
+
+  /* Events table */
+  .ev-table { border-top: 1px solid var(--rule); }
+  .ev-table .row {
+    display: grid; grid-template-columns: 70px 2fr 1fr .8fr 1.2fr 1.8fr;
+    gap: 18px; padding: 24px 0; border-bottom: 1px solid var(--rule); align-items: baseline;
+  }
+  .ev-table .row.head { padding: 12px 0; }
+  .ev-table .num { font-family: var(--serif); font-size: 28px; color: var(--ember); font-style: italic; line-height: 1; }
+  .ev-table .name { font-family: var(--serif); font-size: 22px; line-height: 1.2; }
+  .ev-table .when, .ev-table .guests { font-family: var(--mono); color: var(--ink-2); }
+  .ev-table .budget { font-family: var(--serif); font-style: italic; font-size: 26px; color: var(--gold); }
+  .ev-table .obj { color: var(--ink-3); font-size: 14px; }
+
+  /* The Ask */
+  .ask-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+  .ask-card { background: var(--bg-2); padding: 32px 28px; min-height: 220px; display: flex; flex-direction: column; justify-content: space-between; }
+  .ask-card .n { font-family: var(--serif); font-style: italic; font-size: 56px; color: var(--ember); line-height: 1; }
+  .ask-card .t { font-family: var(--serif); font-size: 22px; line-height: 1.25; }
+
+  .closing-band {
+    background: var(--paper); color: #14110d; padding: 120px 0;
+  }
+  .closing-band .big {
+    font-family: var(--serif); font-size: clamp(80px, 11vw, 220px); line-height: 0.85; letter-spacing: -0.03em;
+  }
+  .closing-band .big em { color: var(--oxblood); }
+
+  /* Placeholders */
+  .ph {
+    background:
+      repeating-linear-gradient(45deg, var(--bg-2) 0 14px, var(--bg-3) 14px 28px);
+    border: 1px solid var(--rule);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .ph .lbl { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-2); background: var(--bg); padding: 7px 12px; border: 1px solid var(--rule); }
+
+  /* Signoff */
+  .signoff { padding: 120px 0 60px; background: var(--bg); border-top: 1px solid var(--rule); }
+  .signoff .grid { display: grid; grid-template-columns: 2fr 1fr; gap: 64px; align-items: end; }
+  .signoff .name { font-family: var(--serif); font-style: italic; font-size: clamp(56px, 7vw, 120px); line-height: 0.9; }
+  .signoff .role { font-family: var(--mono); color: var(--ink-2); margin-top: 18px; }
+  .signoff hr { height: 1px; background: var(--rule); margin: 80px 0 24px; }
+  .footer-row { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); }
+</style>
+</head>
+<body style="background-color: rgb(16, 10, 1)">
+
+<aside class="edge-rail">M5V × STK · NIAGARA FALLS · CONFIDENTIAL <span class="dot">●</span> 2026 / 2027</aside>
+
+<header class="topbar" id="top">
+  <div class="logo-pair">
+    <span class="logo-tile m5v"><img src="assets/m5v-logo.jpeg" alt="M5V" style="opacity: 1"></span>
+    <span style="color: var(--ember); font-family: var(--serif); font-style: italic;">×</span>
+    <span class="logo-tile stk"><img src="assets/stk-logo.png" alt="STK"></span>
+  </div>
+  <div class="pages" style="height: 40px">BRAND PARTNERSHIP &amp; ALIGNMENT</div>
+  <button class="cta" onclick="document.getElementById('ask').scrollIntoView({behavior:'smooth'})">THE OFFER →</button>
+</header>
+
+<!-- CURTAIN -->
+<section id="curtain">
+  <div class="wrap" style="position: relative;">
+    <div class="hero-num it">7</div>
+    <div class="rv in" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; position: relative; z-index: 2;">
+      <span class="mono">
+</span>
+      <span class="mono">
+</span>
+    </div>
+  </div>
+
+  <div class="marquee rv in">
+    <div class="marquee-track">
+      <span class="serif it">Two brands.</span><span class="star">✦</span>
+      <span class="serif it">One region.</span><span class="star">✦</span>
+      <span class="serif it"></span><span class="star">✦</span>
+      <span class="serif it">A table waiting at STK.</span><span class="star">✦</span>
+      <span class="serif it">Two brands.</span><span class="star">✦</span>
+      <span class="serif it">One region.</span><span class="star">✦</span>
+      <span class="serif it">Not Your Daddy's Steak or House</span><span class="star">✦</span>
+      <span class="serif it">A table waiting at STK.</span><span class="star">✦</span>
+    </div>
+  </div>
+
+  <div class="wrap" style="position: relative; z-index: 2;">
+    <div class="hero-grid rv rv-d1">
+      <h1 class="hero-title">
+        <span class="l1">Two brands.</span>
+        <span class="l2 it" style="color: var(--ember);">One region.</span>
+        <span class="l3">Not Your Daddy's Steak Or House</span>
+      </h1>
+      <div class="hero-meta">
+        <div><div class="mono">Prepared by</div><div class="v">Sherard McQueen, M5V</div></div>
+        <div><div class="mono">For</div><div class="v">STK Niagara Falls · GM &amp; Marketing</div></div>
+        <div><div class="mono">Window</div><div class="v">2026 – 2027</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 OVERVIEW + STATS -->
+<section class="sec" id="overview">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num it">01</div>
+      <div class="sec-eye">
+        <div class="label">The Opportunity</div>
+        <div class="title">A flagship venue<br/>that matches <em>the brand.</em></div>
+      </div>
+    </div>
+
+    <div class="stat-strip rv rv-d1">
+      <div class="stat-cell"><div class="big" data-count="5">5</div><div class="lbl">Active Communities · Niagara</div></div>
+      <div class="stat-cell"><div class="big"><span data-count="700">600</span><sup>+</sup></div><div class="lbl">Homes Under Development</div></div>
+      <div class="stat-cell"><div class="big"><sup>$</sup><span data-count="279"></span><sup>M</sup></div><div class="lbl">Gross Revenue Pipeline</div></div>
+      <div class="stat-cell"><div class="big"><span data-count="302"></span><sup>K+</sup></div><div class="lbl">Combined Social Following</div></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; margin-top: 100px;">
+      <div class="rv rv-d2">
+        <p class="pull">M5V is Niagara's most active boutique developer. We have the most social media presence of any developer in the country. Across five communities we are delivering 600+ homes to a buyer who already lives like an STK regular.</p>
+      </div>
+      <div class="rv rv-d3" style="border-left: 2px solid var(--ember); padding-left: 28px;">
+        <p style="color: var(--ink-2); font-size: 17px; line-height: 1.65;">
+          We need a flagship venue. STK needs sustained exposure to a new, high-value local customer base.
+          This proposal outlines a structured partnership that creates measurable value for both organizations — on a permanent basis.
+        </p>
+        <div class="mono ember" style="margin-top: 28px;">→ Six chapters follow. Each one is a number.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 COMPANY PROFILE -->
+<section class="sec alt" id="profile">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num it">02</div>
+      <div class="sec-eye">
+        <div class="label">M5V · The Operator</div>
+        <div class="title">We sell &amp; market aspirational real estate in the <span style="color: rgb(197, 32, 16);">Niagara</span> market</div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: start;">
+      <div class="rv rv-d1">
+        <p class="pull">89% of our purchasers are from Toronto where they expect high end dining &amp; are willing to spend. They are looking for an experience which only STK  can offer in the Region.</p>
+      </div>
+      <div class="ph rv rv-d2" style="aspect-ratio: 4/3; padding: 0; overflow: hidden;"><img src="assets/sherard.png" alt="Sherard McQueen" style="width: 100%; height: 100%; object-fit: cover; display: block;"/></div>
+    </div>
+
+    <div style="margin-top: 100px;">
+      <div class="mono ember" style="margin-bottom: 18px;">
+</div>
+      <div class="rv rv-d3" style="border-top: 1px solid var(--rule);">
+        <div style="display: grid; grid-template-columns: 200px 200px 1fr; gap: 32px; padding: 24px 0; border-bottom: 1px solid var(--rule); align-items: baseline;">
+          <div class="serif" style="font-size: 56px; color: var(--ember); font-style: italic; line-height: 1;">89%</div>
+          <div class="serif" style="font-size: 32px; color: var(--ink-3); text-decoration: line-through; line-height: 1;">
+</div>
+          <div style="color: var(--ink-2);">Purchasers from Toronto or GTA</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 200px 200px 1fr; gap: 32px; padding: 24px 0; border-bottom: 1px solid var(--rule); align-items: baseline;">
+          <div class="serif" style="font-size: 25px; color: var(--ember); font-style: italic; line-height: 1">Higest Price Per Square Foot In the Region</div>
+          <div class="serif" style="font-size: 32px; color: var(--ink-3); text-decoration: line-through; line-height: 1;">
+</div>
+          <div style="color: var(--ink-2);">M5V Development sells our product for the highest price per square foot in the Region</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 32px; padding: 24px 0; border-bottom: 1px solid var(--rule); align-items: baseline;">
+          <div><div class="serif" style="font-size: 44px; color: var(--paper); line-height: 1;">232K<sup style="color: var(--ember); font-size: 0.5em;">+</sup></div><div class="mono muted" style="margin-top: 10px;">Instagram followers</div></div>
+          <div><div class="serif" style="font-size: 44px; color: var(--paper); line-height: 1;">70K<sup style="color: var(--ember); font-size: 0.5em;">+</sup></div><div class="mono muted" style="margin-top: 10px;">TikTok followers</div></div>
+          <div><div class="serif" style="font-size: 44px; color: var(--paper); line-height: 1;">2M<sup style="color: var(--ember); font-size: 0.5em;">+</sup></div><div class="mono muted" style="margin-top: 10px;">Monthly organic reach</div></div>
+          <div><div class="serif" style="font-size: 44px; color: var(--paper); line-height: 1;">50K<sup style="color: var(--ember); font-size: 0.5em;">+</sup></div><div class="mono muted" style="margin-top: 10px;">Owned buyer database</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 PORTFOLIO -->
+<section class="sec" id="portfolio">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num it">03</div>
+      <div class="sec-eye">
+        <div class="label">Active Niagara Portfolio</div>
+        <div class="title">Five communities,<br/><em>minutes</em> from STK.</div>
+      </div>
+    </div>
+
+    <div class="ptable rv rv-d1">
+      <div class="row head">
+        <div class="mono muted">#</div>
+        <div class="mono muted">Community</div>
+        <div class="mono muted">Type</div>
+        <div class="mono muted">Units</div>
+        <div class="mono muted" style="text-align: right;">To STK</div>
+      </div>
+      <div class="row"><div class="idx">01</div><div class="name">The Niagara Phase 1 (McLeod Road)</div><div class="type">Townhomes</div><div class="units">54</div><div class="prox">4 MIN</div></div>
+      <div class="row"><div class="idx">02</div><div class="name">The Niagara Phase 2 (Mcleod Road)</div><div class="type">Townhomes</div><div class="units">60</div><div class="prox">5 MIN</div></div>
+      <div class="row"><div class="idx">03</div><div class="name">The Niagara Phase 3 (McLeod Road)</div><div class="type">Townhomes</div><div class="units">147</div><div class="prox">5 MIN</div></div>
+      <div class="row"><div class="idx">04</div><div class="name">The Lundy (Lundy &amp; Garnder Rd)</div><div class="type">8 Storey Tower</div><div class="units">280</div><div class="prox">7 MIN</div></div>
+      <div class="row"><div class="idx">05</div><div class="name">Le Falls (Kalar Road)</div><div class="type">Freehold Towns</div><div class="units">113</div><div class="prox">7 MIN</div></div>
+    </div>
+
+    <div class="ribbon rv rv-d2" style="margin-top: 80px;">
+      <div class="copy">Five Communities sit within a five-to-seven minute drive of STK Niagara Falls.</div>
+      <div class="stamp">STK
+</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 DEMOGRAPHICS -->
+<section class="sec alt" id="demographics">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num it">04</div>
+      <div class="sec-eye">
+        <div class="label">Demographics</div>
+        <div class="title">The M5V buyer<br/>is STK's <em>ideal guest.</em></div>
+      </div>
+    </div>
+
+    <p class="pull rv rv-d1" style="max-width: 34ch; margin-bottom: 60px;">
+      Not an incidental match. <mark>A structural one.</mark>
+    </p>
+
+    <div class="demo-split rv rv-d2">
+      <div class="demo-col">
+        <h4>M5V Buyer Profile</h4>
+        <div class="row"><div class="trait">Household Income</div><div class="val">$150K – $300K+</div></div>
+        <div class="row"><div class="trait">Age Range</div><div class="val">25 – 54</div></div>
+        <div class="row"><div class="trait">Origin Market</div><div class="val">Greater Toronto Area</div></div>
+        <div class="row"><div class="trait">Lifestyle</div><div class="val">Upscale dining, travel, fitness</div></div>
+        <div class="row"><div class="trait">Purchase Intent</div><div class="val">Primary residence + investment</div></div>
+        <div class="row"><div class="trait">Decision Profile</div><div class="val">High-consideration, brand-aware</div></div>
+      </div>
+      <div class="demo-col">
+        <h4 style="color: var(--gold);">STK Target Guest</h4>
+        <div class="row"><div class="trait">Household Income</div><div class="val">$120K – $250K+</div></div>
+        <div class="row"><div class="trait">Age Range</div><div class="val">28 – 55</div></div>
+        <div class="row"><div class="trait">Origin Market</div><div class="val">Urban professionals / tourists</div></div>
+        <div class="row"><div class="trait">Lifestyle</div><div class="val">Upscale dining, events, celebrations</div></div>
+        <div class="row"><div class="trait">Purchase Intent</div><div class="val">Special occasions + regular dining</div></div>
+        <div class="row"><div class="trait">Decision Profile</div><div class="val">Experience-driven, value-conscious</div></div>
+      </div>
+    </div>
+
+    <div class="rv rv-d3" style="margin-top: 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;">
+      <div class="serif it" style="font-size: clamp(36px, 4.4vw, 64px); line-height: 1.05;">
+We are bringing STK regulars.</div>
+      <div style="border-top: 1px solid var(--ember); padding-top: 18px; color: var(--ink-2); line-height: 1.6; font-size: 17px;">Over 600 households, this effect compounds into a permanent, loyal customer cohort. Each closing is a behavioral anchor — STK becomes their default for occasions, client dinners, date nights.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 MEDIA VALUE -->
+<section class="sec paper-sec" id="media">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num it flat">05</div>
+      <div class="sec-eye" style="color: #14110d;">
+        <div class="label">Media Value</div>
+        <div class="title">What M5V's platform<br/>is <em>worth.</em></div>
+      </div>
+    </div>
+
+    <p class="rv rv-d1" style="font-family: var(--serif); font-style: italic; font-size: clamp(26px, 2.6vw, 38px); line-height: 1.35; max-width: 62ch; color: #14110d; margin-bottom: 56px;">
+      Industry-benchmarked rates. What a brand would pay to purchase equivalent reach.
+      <span class="oxblood">Our partnership offers this at zero cash cost to STK.</span>
+    </p>
+
+    <div class="money-grid rv rv-d2" style="border-bottom: 1px solid #beb29a;">
+      <div class="money-cell" style="border-color: #beb29a;"><div class="item">Dedicated IG feed post</div><div class="aud" style="color: #6b614e;">232K audience</div></div>
+      <div class="money-cell" style="border-color: #beb29a;"><div class="price">$2,500–$5,000</div></div>
+      <div class="money-cell" style="border-color: #beb29a;"><div class="basis" style="color: #6b614e;">HypeAuditor 2024, macro-influencer tier</div></div>
+
+      <div class="money-cell" style="border-color: #beb29a;"><div class="item">IG Story set (5-frame)</div><div class="aud" style="color: #6b614e;">Organic + event</div></div>
+      <div class="money-cell" style="border-color: #beb29a;"><div class="price">$800–$1,500</div></div>
+      <div class="money-cell" style="border-color: #beb29a;"><div class="basis" style="color: #6b614e;">Creator IQ benchmark · real estate vertical</div></div>
+
+      <div class="money-cell" style="border-color: #beb29a;"><div class="item">TikTok dedicated video</div><div class="aud" style="color: #6b614e;">70K audience</div></div>
+      <div class="money-cell" style="border-color: #beb29a;"><div class="price">$1,000–$3,000</div></div>
+      <div class="money-cell" style="border-color: #beb29a;"><div class="basis" style="color: #6b614e;">Influencer Marketing Hub TikTok rate guide</div></div>
+
+      <div class="money-cell" style="border-color: #beb29a;"><div class="item">Email blast</div><div class="aud" style="color: #6b614e;">50K+ buyer database</div></div>
+      <div class="money-cell" style="border-color: #beb29a;"><div class="price">$1,500–$4,000</div></div>
+      <div class="money-cell" style="border-color: #beb29a;"><div class="basis" style="color: #6b614e;">Klaviyo B2C · $30–80 CPM verified list</div></div>
+
+      <div class="money-cell" style="border-color: #beb29a;"><div class="item">Event co-brand mention</div><div class="aud" style="color: #6b614e;">On-site · 100 guests</div></div>
+      <div class="money-cell" style="border-color: #beb29a;"><div class="price">$2,000–$3,500</div></div>
+      <div class="money-cell" style="border-color: #beb29a;"><div class="basis" style="color: #6b614e;">Industry hospitality co-sponsorship</div></div>
+    </div>
+
+    <div class="money-total rv rv-d3" style="border-color: var(--oxblood);">
+      <div><div class="lbl" style="color: #14110d;">Total monthly</div><div style="font-family: var(--mono); font-size: 11px; color: #6b614e; margin-top: 6px; letter-spacing: 0.18em; text-transform: uppercase;">Minimum deliverable set</div></div>
+      <div><div class="sum" style="color: var(--oxblood);">$10K – $22K</div></div>
+      <div><div class="note" style="color: #6b614e;">3 posts + 2 stories + 1 TikTok + 1 email blast<br/>Every month. Permanent.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 STRUCTURE -->
+<section class="sec" id="partnership">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num it">06</div>
+      <div class="sec-eye">
+        <div class="label">Partnership Structure</div>
+        <div class="title">Alignment. 
+ do this for the region
+</div>
+      </div>
+    </div>
+
+    <div class="deal-grid rv rv-d1">
+      <div class="deal-col left">
+        <h4>M5V Delivers to STK</h4>
+        <div class="item"><div class="t">Dedicated IG feed Collab post featuring STK</div><div class="v" style="color: rgb(197, 32, 16)">2× / mo</div></div>
+        <div class="item"><div class="t">IG Stories featuring STK</div><div class="v">1 × / mo</div></div>
+        <div class="item"><div class="t">TikTok featuring STK event content</div><div class="v">1× / mo</div></div>
+        <div class="item"><div class="t">Email blast to buyer database</div><div class="v">1× / mo</div></div>
+        <div class="item"><div class="t">Event co-branding · closings &amp; launches</div><div class="v">Per event</div></div>
+      </div>
+      <div class="deal-col right">
+        <h4>STK Delivers to M5V</h4>
+        <div class="item"><div class="t">Official Event Venue designation, Niagara</div><div class="v">→</div></div>
+        <div class="item"><div class="t"> Preferred pricing with 50%  reduction on F&amp;B</div><div class="v">→</div></div>
+        <div class="item"><div class="t">Dedicated event liaison</div><div class="v">→</div></div>
+        <div class="item"><div class="t">Provide special incentives for our email database </div><div class="v">→</div></div>
+        <div class="item"><div class="t">Merch or physical item to be included for all new home closings</div><div class="v">→</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 07 EVENTS -->
+<section class="sec alt" id="events">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num it">07</div>
+      <div class="sec-eye">
+        <div class="label">THE NUMBERS</div>
+        <div class="title">What Makes M5V Different; Metrics</div>
+      </div>
+    </div>
+
+    <p class="rv rv-d1" style="font-family: var(--serif); font-style: italic; font-size: clamp(24px, 2.4vw, 34px); line-height: 1.35; color: var(--ink-2); max-width: 64ch; margin-bottom: 56px;">
+      This is not speculative. M5V has a confirmed event calendar with real budget already allocated.
+      First event mid-June 2026. STK has the opportunity to be the venue for every event on this list.
+    </p>
+
+    <div class="ev-table rv rv-d2">
+      <div class="row head">
+        <div class="mono muted">#</div>
+        <div class="mono muted">Event</div>
+        <div class="mono muted">Timing</div>
+        <div class="mono muted">Guests</div>
+        <div class="mono muted">Budget</div>
+        <div class="mono muted">Objective</div>
+      </div>
+      <div class="row"><div class="num">01</div><div class="name">Audience Age</div><div class="when">85.2%</div><div class="guests">100</div><div class="budget" style="font-size: 20px">25 - 54 Years Old</div><div class="obj">20–30 unit APS closings</div></div>
+      <div class="row"><div class="num">02</div><div class="name">Audience Gender</div><div class="when">73.6 </div><div class="guests">Male</div><div class="budget">$25,000</div><div class="obj">VIP buyer community intro</div></div>
+      <div class="row"><div class="num">03</div><div class="name">
+</div><div class="when">
+</div><div class="guests">Canada</div><div class="budget">$8,000</div><div class="obj">Investor briefing</div></div>
+      <div class="row"><div class="num">04</div><div class="name">Audience Location
+</div><div class="when">29.9%
+</div><div class="guests">75–100</div><div class="budget">$50,000</div><div class="obj">Phase 4 pre-sales launch</div></div>
+      <div class="row"><div class="num">05</div><div class="name">Annual Buyer Appreciation Night</div><div class="when">Dec 2026</div><div class="guests">150+</div><div class="budget">$75,000</div><div class="obj">Retention + referrals</div></div>
+      <div class="row"><div class="num">06</div><div class="name">7 Community Tour Event</div><div class="when">2027 ongoing</div><div class="guests">TBD</div><div class="budget">TBD</div><div class="obj">Regional brand consolidation</div></div>
+    </div>
+
+    <div class="rv rv-d3" style="margin-top: 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start;">
+      <div class="ph" style="aspect-ratio: 16/10;"><div class="lbl">STK interior · event tablescape</div></div>
+      <div>
+        <div class="mono ember" style="margin-bottom: 12px;">THE 600 - HOME EFFECT</div>
+        <h3 class="serif" style="font-size: clamp(28px, 3.2vw, 44px); line-height: 1.15; margin-bottom: 18px;">
+          Each closing is a new household.<br/>Each household, a potential <span class="it ember">STK regular.</span>
+        </h3>
+        <p style="color: var(--ink-2); font-size: 16px; line-height: 1.6;">
+          Introduced to STK in the single most memorable moment of their home purchase.
+          That lifetime value is not measurable in a single season. It compounds permanently.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 THE ASK -->
+<section class="sec" id="ask">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num it">08</div>
+      <div class="sec-eye">
+        <div class="label">THE OFFER</div>
+        <div class="title">A designation.<br/>Preferred access. <em> &amp; STK</em></div>
+      </div>
+    </div>
+
+    <p class="rv rv-d1" style="font-family: var(--serif); font-style: italic; font-size: clamp(24px, 2.4vw, 36px); line-height: 1.35; max-width: 66ch; color: var(--ink-2); margin-bottom: 80px;">No marketing spend. No exclusivity. A partnership designation and preferred access in exchange for sustained, high-value promotional activity in front of 302,000 followers and 50,000+ qualified homebuyers. One Year agreement mutually renewable.</p>
+
+    <div class="ask-grid rv rv-d2">
+      <div class="ask-card"><div class="n it">01</div><div class="t">Official designation as M5V's Preferred Event Venue, Niagara.</div></div>
+      <div class="ask-card"><div class="n it">02</div><div class="t">50% reduction on F&amp;B; minimums for all M5V-booked events.</div></div>
+      <div class="ask-card"><div class="n it">03</div><div class="t">A dedicated event contact at STK for direct booking access.</div></div>
+      <div class="ask-card"><div class="n it">04</div><div class="t">STK Merch or physical products to provide Purchasers at the time of closing to reinforce our initiative.</div></div>
+      <div class="ask-card"><div class="n it">05</div><div class="t">Curate exclusive offers for purchase in our M5V projects
+
+</div></div>
+      <div class="ask-card"><div class="n it">06</div><div class="t">STK co-branding featured in M5V event materials and promotional content.</div></div>
+    </div>
+
+    <div class="ribbon rv rv-d3" style="margin-top: 80px; background: var(--ember);">
+      <div class="copy" style="color: var(--bg);">
+        In exchange, M5V commits to a minimum of <strong style="color: var(--bg); background: var(--paper); padding: 0 8px;">$10,000/month</strong> in equivalent earned media, plus all confirmed event revenue booked exclusively at STK.
+      </div>
+      <div class="stamp" style="border-color: var(--bg); color: var(--bg);">Equiv. media<span class="big" style="color: var(--bg);">$120K/yr</span></div>
+    </div>
+
+    <div class="rv rv-d4" style="margin-top: 100px;">
+      <div class="mono muted" style="margin-bottom: 22px;">Proposed Next Steps</div>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
+        <div style="border-top: 2px solid var(--ember); padding-top: 14px;"><div class="serif it ember" style="font-size: 34px; line-height: 1;">i.</div><div class="serif" style="font-size: 22px; margin-top: 12px; line-height: 1.2;">30-min meeting</div><div class="muted" style="margin-top: 8px; font-size: 14px;">M5V leadership and STK marketing align on format.</div></div>
+        <div style="border-top: 2px solid var(--ember); padding-top: 14px;"><div class="serif it ember" style="font-size: 34px; line-height: 1;">ii.</div><div class="serif" style="font-size: 22px; margin-top: 12px; line-height: 1.2;">One-page MOU</div><div class="muted" style="margin-top: 8px; font-size: 14px;">Designation, rates, content. No legal complexity.</div></div>
+        <div style="border-top: 2px solid var(--ember); padding-top: 14px;"><div class="serif it ember" style="font-size: 34px; line-height: 1;">iii.</div><div class="serif" style="font-size: 22px; margin-top: 12px; line-height: 1.2;">Create Special Offer for Purchasers</div><div class="muted" style="margin-top: 8px; font-size: 14px;">Merch or offers for new and current buyers</div></div>
+        <div style="border-top: 2px solid var(--ember); padding-top: 14px;"><div class="serif it ember" style="font-size: 34px; line-height: 1;">iv.</div><div class="serif" style="font-size: 22px; margin-top: 12px; line-height: 1.2;">June 2026 event</div><div class="muted" style="margin-top: 8px; font-size: 14px;">Closing event confirmed at STK, brief within five days.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING BAND -->
+<section class="closing-band">
+  <div class="wrap">
+    <div class="mono" style="color: #6b614e; margin-bottom: 24px;">— Closing line</div>
+    <div class="big">STK, we want<br/>to be <em class="it">your people.</em></div>
+    <div class="mono" style="color: #6b614e; margin-top: 36px;">Sherard McQueen · Managing Partner, M5V Developments · @m5vdevelopments</div>
+  </div>
+</section>
+
+<!-- SIGNOFF -->
+<section class="signoff">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <div class="logo-pair" style="margin-bottom: 36px;">
+          <span class="logo-tile m5v" style="height: 64px;"><img src="assets/m5v-logo.jpeg" alt="M5V"></span>
+          <span style="color: var(--ember); font-family: var(--serif); font-style: italic; font-size: 44px; line-height: 1;">×</span>
+          <span class="logo-tile stk" style="height: 64px;"><img src="assets/stk-logo.png" alt="STK"></span>
+        </div>
+        <div class="serif name">Let's <span class="it" style="color: var(--ember);">talk.</span></div>
+      </div>
+      <div style="border-top: 1px solid var(--ember); padding-top: 22px;">
+        <div class="mono muted">Prepared by</div>
+        <div class="serif" style="font-size: 36px; line-height: 1.1; margin-top: 8px;">Sherard McQueen</div>
+        <div class="role">Managing Partner &amp; Chief Visionary Officer</div>
+        <div class="mono muted" style="margin-top: 22px;">M5V Developments · Toronto · Niagara</div>
+        <div class="mono muted" style="margin-top: 4px;">@m5vdevelopments · 232K IG · 70K TikTok</div>
+      </div>
+    </div>
+    <hr/>
+    <div class="footer-row">
+      <span>M5V × STK · Confidential Partnership Proposal · 2026</span>
+      <span>09 / 09</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Topbar scroll
+  const tb = document.getElementById('top');
+  addEventListener('scroll', () => tb.classList.toggle('on', scrollY > 24), { passive: true });
+
+  // Reveal observer
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+  // Counter animation
+  const cio = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const target = +el.dataset.count;
+      let t0;
+      const start = performance.now();
+      const dur = 1500;
+      const step = (now) => {
+        const p = Math.min(1, (now - start) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased).toLocaleString();
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+      cio.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
+
+</script>
+
+</body>
+</html>

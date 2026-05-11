@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M5V × STK — Niagara Falls Partnership · v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700&family=Archivo:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0a07;
+    --bg-2: #16120c;
+    --bg-3: #221a10;
+    --paper: #f1ead8;
+    --ink: #f1ead8;
+    --ink-2: #c8bfa7;
+    --ink-3: #82765f;
+    --rule: #3a3122;
+    --oxblood: #8b1a1a;
+    --ember: #c52010;
+    --gold: #d3a04e;
+    --serif: 'Bodoni Moda', serif;
+    --sans: 'Archivo', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: var(--sans); font-weight: 400; font-size: 16px; line-height: 1.5;
+    overflow-x: hidden; -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--oxblood); color: var(--paper); }
+  img { display: block; max-width: 100%; }
+  hr { border: 0; }
+  .serif { font-family: var(--serif); font-weight: 400; }
+  .it { font-style: italic; }
+  .mono { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; }
+  .ember { color: var(--ember); }
+  .gold { color: var(--gold); }
+  .oxblood { color: var(--oxblood); }
+  .accent { color: var(--ember); }
+  .paper { color: var(--paper); }
+  .muted { color: var(--ink-3); }
+
+  /* Page chrome */
+  .edge-rail {
+    position: fixed; top: 50%; left: 18px; transform: translateY(-50%) rotate(-90deg); transform-origin: left center;
+    z-index: 40; pointer-events: none;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ink-3);
+    white-space: nowrap;
+  }
+  .edge-rail .dot { color: var(--ember); }
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 36px;
+    background: color-mix(in oklab, var(--bg) 70%, transparent);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s;
+  }
+  .topbar.on { border-bottom-color: var(--rule); }
+  .logo-pair { display: flex; align-items: center; gap: 12px; }
+  .logo-tile { background: #000; height: 32px; padding: 4px 8px; display: inline-flex; align-items: center; }
+  .logo-tile.m5v { background: #fff; }
+  .logo-tile img { height: 100%; width: auto; }
+  .topbar .pages { font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-3); }
+  .topbar .cta {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    background: var(--ember); color: var(--bg); border: 0; padding: 11px 18px; cursor: pointer; transition: background .2s;
+  }
+  .topbar .cta:hover { background: var(--gold); }
+
+  /* Layout */
+  .wrap { max-width: 1480px; margin: 0 auto; padding: 0 72px; }
+  @media (max-width: 900px) { .wrap { padding: 0 24px; } .topbar { padding: 14px 20px; } .edge-rail { display: none; } }
+  section { position: relative; }
+
+  /* Cinematic curtain hero */
+  #curtain {
+    min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between;
+    padding: 110px 0 56px; position: relative; overflow: hidden;
+  }
+  .marquee {
+    overflow: hidden; white-space: nowrap; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+    padding: 14px 0;
+    font-family: var(--serif); font-style: italic; font-size: clamp(28px, 3.4vw, 50px); color: var(--ember);
+  }
+  .marquee-track { display: inline-block; animation: marquee 36s linear infinite; will-change: transform; }
+  .marquee-track > span { padding: 0 .6em; }
+  .marquee-track > .star { color: var(--gold); }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  .hero-grid {
+    display: grid; grid-template-columns: 1fr; align-items: end;
+    padding-top: 60px;
+  }
+  .hero-title {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(96px, 16vw, 280px); line-height: 0.85; letter-spacing: -0.04em;
+    color: var(--paper);
+  }
+  .hero-title .l1 { display: block; }
+  .hero-title .l2 { display: block; padding-left: 12vw; }
+  .hero-title .l3 { display: block; text-align: right; }
+  .hero-num {
+    position: absolute; top: 20%; right: -3vw; pointer-events: none; user-select: none;
+    font-family: var(--serif); font-style: italic; font-size: clamp(420px, 56vw, 1000px); line-height: 0.8;
+    color: var(--oxblood); opacity: 0.18; letter-spacing: -0.05em;
+    z-index: 0;
+  }
+  .hero-meta {
+    position: relative; z-index: 2;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 80px;
+    border-top: 1px solid var(--rule); padding-top: 22px;
+  }
+  .hero-meta > div .mono { color: var(--ink-3); }
+  .hero-meta > div .v { font-family: var(--serif); font-size: 28px; margin-top: 8px; line-height: 1.1; }
+
+  /* Section frame */
+  .sec { padding: 140px 0 110px; position: relative; }
+  .sec.alt { background: var(--bg-2); }
+  .sec.paper-sec { background: var(--paper); color: #14110d; }
+  .sec.paper-sec ::selection { background: var(--oxblood); color: var(--paper); }
+  .sec.paper-sec .mono { color: #7a705c; }
+  .sec.paper-sec .muted { color: #6b614e; }
+  .sec.paper-sec .rule { background: #beb29a; }
+
+  .sec-head { display: flex; align-items: baseline; gap: 28px; margin-bottom: 64px; }
+  .sec-num {
+    font-family: var(--serif); font-size: clamp(160px, 22vw, 360px); font-style: italic; line-height: 0.8;
+    color: var(--ember); letter-spacing: -0.04em;
+  }
+  .sec-num.lite { color: var(--oxblood); }
+  .sec-num.flat { color: #1d1812; }
+  .sec-eye { flex: 1; border-bottom: 2px solid currentColor; padding-bottom: 14px; }
+  .sec-eye .label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; }
+  .sec-eye .title { font-family: var(--serif); font-size: clamp(36px, 5vw, 76px); line-height: 1; letter-spacing: -0.02em; margin-top: 16px; }
+  .sec-eye .title em { font-style: italic; color: var(--ember); }
+  .sec.paper-sec .sec-eye .title em { color: var(--oxblood); }
+
+  /* Reveal */
+  .rv { opacity: 0; transform: translateY(28px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
+  .rv.in { opacity: 1; transform: none; }
+  .rv-d1 { transition-delay: .08s; } .rv-d2 { transition-delay: .16s; } .rv-d3 { transition-delay: .26s; } .rv-d4 { transition-delay: .36s; }
+
+  /* Stat strip */
+  .stat-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .stat-cell { padding: 36px 28px; border-right: 1px solid var(--rule); position: relative; min-height: 220px; display: flex; flex-direction: column; justify-content: space-between; }
+  .stat-cell:last-child { border-right: 0; }
+  .stat-cell .big { font-family: var(--serif); font-size: clamp(68px, 7.5vw, 120px); line-height: 1; letter-spacing: -0.02em; color: var(--paper); }
+  .stat-cell .big sup { font-size: 0.45em; color: var(--ember); vertical-align: top; margin-left: 6px; }
+  .stat-cell:nth-child(2) .big sup { font-size: 0.45em; }
+  .stat-cell .lbl { font-family: var(--mono); color: var(--ink-3); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
+
+  /* Pull quote */
+  .pull {
+    font-family: var(--serif); font-style: italic; font-size: clamp(34px, 4.6vw, 72px); line-height: 1.05; letter-spacing: -0.015em;
+    color: var(--paper); max-width: 26ch;
+  }
+  .pull mark { background: transparent; color: var(--ember); }
+
+  /* Properties table */
+  .ptable { border-top: 1px solid var(--rule); }
+  .ptable .row {
+    display: grid; grid-template-columns: 70px 1.8fr 1fr .6fr .6fr;
+    gap: 18px; padding: 22px 0; border-bottom: 1px solid var(--rule); align-items: baseline;
+    transition: background .2s, padding-left .2s;
+  }
+  .ptable .row.head { padding: 12px 0; }
+  .ptable .row:hover:not(.head) { background: color-mix(in oklab, var(--ember) 8%, transparent); padding-left: 12px; }
+  .ptable .idx { font-family: var(--mono); color: var(--ink-3); }
+  .ptable .name { font-family: var(--serif); font-size: 24px; line-height: 1.15; }
+  .ptable .type { color: var(--ink-2); font-size: 14px; }
+  .ptable .units { font-family: var(--mono); color: var(--ink-2); }
+  .ptable .prox { font-family: var(--mono); color: var(--ember); text-align: right; }
+  .ptable .row.far .prox { color: var(--ink-3); }
+
+  /* Demographics split */
+  .demo-split { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--rule); }
+  .demo-col { padding: 36px 32px; border-right: 1px solid var(--rule); }
+  .demo-col:last-child { border-right: 0; background: var(--bg-3); }
+  .demo-col h4 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ember); margin-bottom: 24px; }
+  .demo-col .row { display: grid; grid-template-columns: 1fr; gap: 4px; padding: 18px 0; border-bottom: 1px solid var(--rule); }
+  .demo-col .row:last-child { border-bottom: 0; }
+  .demo-col .row .trait { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); }
+  .demo-col .row .val { font-family: var(--serif); font-size: 22px; line-height: 1.3; color: var(--paper); }
+
+  /* Money block */
+  .money-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 0; }
+  .money-cell { padding: 28px 24px; border-top: 1px solid var(--rule); border-right: 1px solid var(--rule); }
+  .money-cell:nth-child(3n) { border-right: 0; }
+  .money-cell .item { font-family: var(--serif); font-size: 22px; line-height: 1.15; }
+  .money-cell .aud { font-family: var(--mono); color: var(--ink-3); margin-top: 8px; }
+  .money-cell .price { font-family: var(--serif); font-style: italic; font-size: clamp(28px, 3vw, 42px); color: var(--ember); line-height: 1; }
+  .money-cell .basis { color: var(--ink-3); font-size: 13px; line-height: 1.5; }
+  .money-total { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 0; border-top: 2px solid var(--ember); border-bottom: 2px solid var(--ember); margin-top: 14px; }
+  .money-total > div { padding: 28px 24px; }
+  .money-total .lbl { font-family: var(--serif); font-style: italic; font-size: 34px; }
+  .money-total .sum { font-family: var(--serif); font-size: 44px; color: var(--ember); line-height: 1; }
+  .money-total .note { color: var(--ink-3); font-size: 13px; line-height: 1.5; }
+
+  /* Ribbon callout */
+  .ribbon {
+    background: var(--oxblood); color: var(--paper); padding: 56px 64px;
+    display: grid; grid-template-columns: 1fr auto; gap: 36px; align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .ribbon::before {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(135deg, transparent 0 24px, rgba(0,0,0,0.06) 24px 25px);
+    pointer-events: none;
+  }
+  .ribbon .copy { font-family: var(--serif); font-size: clamp(28px, 3.2vw, 48px); line-height: 1.1; font-style: italic; }
+  .ribbon .copy strong { font-style: normal; color: var(--gold); }
+  .ribbon .stamp {
+    border: 2px solid var(--paper); padding: 18px 24px; text-align: center; transform: rotate(-3deg);
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.24em;
+  }
+  .ribbon .stamp .big { font-family: var(--serif); font-size: 44px; display: block; letter-spacing: 0; margin-top: 4px; }
+
+  /* Deliverables */
+  .deal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .deal-col { padding: 36px 36px; border-right: 1px solid var(--rule); }
+  .deal-col:last-child { border-right: 0; background: var(--bg-3); }
+  .deal-col h4 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 22px; }
+  .deal-col.left h4 { color: var(--ember); }
+  .deal-col.right h4 { color: var(--gold); }
+  .deal-col .item { display: grid; grid-template-columns: 1fr auto; gap: 18px; padding: 18px 0; border-bottom: 1px solid var(--rule); align-items: baseline; }
+  .deal-col .item:last-child { border-bottom: 0; }
+  .deal-col .item .t { font-family: var(--serif); font-size: 19px; line-height: 1.3; }
+  .deal-col .item .v { font-family: var(--mono); color: var(--ember); white-space: nowrap; }
+  .deal-col.right .item .v { color: var(--gold); }
+
+  /* Secret word */
+  .sw-card {
+    background: linear-gradient(145deg, var(--bg-3), var(--bg-2));
+    border: 1px solid var(--rule); padding: 56px 48px; text-align: center; position: relative; overflow: hidden;
+  }
+  .sw-card::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center top, color-mix(in oklab, var(--ember) 25%, transparent), transparent 60%);
+    pointer-events: none;
+  }
+  .sw-word { font-family: var(--serif); font-style: italic; font-size: clamp(72px, 12vw, 180px); line-height: 1; color: var(--ember); position: relative; z-index: 1; }
+  .sw-meta { font-family: var(--mono); color: var(--ink-3); margin-top: 12px; position: relative; z-index: 1; }
+
+  /* Events table */
+  .ev-table { border-top: 1px solid var(--rule); }
+  .ev-table .row {
+    display: grid; grid-template-columns: 70px 2fr 1fr .8fr 1.2fr 1.8fr;
+    gap: 18px; padding: 24px 0; border-bottom: 1px solid var(--rule); align-items: baseline;
+  }
+  .ev-table .row.head { padding: 12px 0; }
+  .ev-table .num { font-family: var(--serif); font-size: 28px; color: var(--ember); font-style: italic; line-height: 1; }
+  .ev-table .name { font-family: var(--serif); font-size: 22px; line-height: 1.2; }
+  .ev-table .when, .ev-table .guests { font-family: var(--mono); color: var(--ink-2); }
+  .ev-table .budget { font-family: var(--serif); font-style: italic; font-size: 26px; color: var(--gold); }
+  .ev-table .obj { color: var(--ink-3); font-size: 14px; }
+
+  /* The Ask */
+  .ask-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+  .ask-card { background: var(--bg-2); padding: 32px 28px; min-height: 220px; display: flex; flex-direction: column; justify-content: space-between; }
+  .ask-card .n { font-family: var(--serif); font-style: italic; font-size: 56px; color: var(--ember); line-height: 1; }
+  .ask-card .t { font-family: var(--serif); font-size: 22px; line-height: 1.25; }
+
+  .closing-band {
+    background: var(--paper); color: #14110d; padding: 120px 0;
+  }
+  .closing-band .big {
+    font-family: var(--serif); font-size: clamp(80px, 11vw, 220px); line-height: 0.85; letter-spacing: -0.03em;
+  }
+  .closing-band .big em { color: var(--oxblood); }
+
+  /* Placeholders */
+  .ph {
+    background:
+      repeating-linear-gradient(45deg, var(--bg-2) 0 14px, var(--bg-3) 14px 28px);
+    border: 1px solid var(--rule);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .ph .lbl { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-2); background: var(--bg); padding: 7px 12px; border: 1px solid var(--rule); }
+
+  /* Signoff */
+  .signoff { padding: 120px 0 60px; background: var(--bg); border-top: 1px solid var(--rule); }
+  .signoff .grid { display: grid; grid-template-columns: 2fr 1fr; gap: 64px; align-items: end; }
+  .signoff .name { font-family: var(--serif); font-style: italic; font-size: clamp(56px, 7vw, 120px); line-height: 0.9; }
+  .signoff .role { font-family: var(--mono); color: var(--ink-2); margin-top: 18px; }
+  .signoff hr { height: 1px; background: var(--rule); margin: 80px 0 24px; }
+  .footer-row { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); }
+</style>
+</head>
+<body style="background-color: rgb(16, 10, 1)">
+
+<aside class="edge-rail">M5V × STK · NIAGARA FALLS · CONFIDENTIAL <span class="dot">●</span> 2026 / 2027</aside>
+
+<header class="topbar" id="top">
+  <div class="logo-pair">
+    <span class="logo-tile m5v"><img src="data:image/jpeg;base64,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" alt="M5V" style="opacity: 1"></span>
+    <span style="color: var(--ember); font-family: var(--serif); font-style: italic;">×</span>
+    <span class="logo-tile stk"><img src="data:image/png;base64,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" alt="STK"></span>
+  </div>
+  <div class="pages" style="height: 40px">BRAND PARTNERSHIP &amp; ALIGNMENT</div>
+  <button class="cta" onclick="document.getElementById('ask').scrollIntoView({behavior:'smooth'})">THE OFFER →</button>
+</header>
+
+<!-- CURTAIN -->
+<section id="curtain">
+  <div class="wrap" style="position: relative;">
+    <div class="hero-num it">7</div>
+    <div class="rv in" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; position: relative; z-index: 2;">
+      <span class="mono">
+</span>
+      <span class="mono">
+</span>
+    </div>
+  </div>
+
+  <div class="marquee rv in">
+    <div class="marquee-track">
+      <span class="serif it">Two brands.</span><span class="star">✦</span>
+      <span class="serif it">One region.</span><span class="star">✦</span>
+      <span class="serif it"></span><span class="star">✦</span>
+      <span class="serif it">A table waiting at STK.</span><span class="star">✦</span>
+      <span class="serif it">Two brands.</span><span class="star">✦</span>
+      <span class="serif it">One region.</span><span class="star">✦</span>
+      <span class="serif it">Not Your Daddy's Steak or House</span><span class="star">✦</span>
+      <span class="serif it">A table waiting at STK.</span><span class="star">✦</span>
+    </div>
+  </div>
+
+  <div class="wrap" style="position: relative; z-index: 2;">
+    <div class="hero-grid rv rv-d1">
+      <h1 class="hero-title">
+        <span class="l1">Two brands.</span>
+        <span class="l2 it" style="color: var(--ember);">One region.</span>
+        <span class="l3">Not Your Daddy's Steak Or House</span>
+      </h1>
+      <div class="hero-meta">
+        <div><div class="mono">Prepared by</div><div class="v">Sherard McQueen, M5V</div></div>
+        <div><div class="mono">For</div><div class="v">STK Niagara Falls · GM &amp; Marketing</div></div>
+        <div><div class="mono">Window</div><div class="v">2026 – 2027</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 OVERVIEW + STATS -->
+<section class="sec" id="overview">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num it">01</div>
+      <div class="sec-eye">
+        <div class="label">The Opportunity</div>
+        <div class="title">A flagship venue<br/>that matches <em>the brand.</em></div>
+      </div>
+    </div>
+
+    <div class="stat-strip rv rv-d1">
+      <div class="stat-cell"><div class="big" data-count="5">5</div><div class="lbl">Active Communities · Niagara</div></div>
+      <div class="stat-cell"><div class="big"><span data-count="600">600</span><sup>+</sup></div><div class="lbl">Homes Under Development</div></div>
+      <div class="stat-cell"><div class="big"><sup>$</sup><span data-count="279"></span><sup>M</sup></div><div class="lbl">Gross Revenue Pipeline</div></div>
+      <div class="stat-cell"><div class="big"><span data-count="302"></span><sup>K+</sup></div><div class="lbl">Combined Social Following</div></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; margin-top: 100px;">
+      <div class="rv rv-d2">
+        <p class="pull">M5V is Niagara's most active boutique developer. We have the most social media presence of any developer in the country. Across five communities we are delivering 600+ homes to a buyer who already lives like an STK regular.</p>
+      </div>
+      <div class="rv rv-d3" style="border-left: 2px solid var(--ember); padding-left: 28px;">
+        <p style="color: var(--ink-2); font-size: 17px; line-height: 1.65;">
+          We need a flagship venue. STK needs sustained exposure to a new, high-value local customer base.
+          This proposal outlines a structured partnership that creates measurable value for both organizations — on a permanent basis.
+        </p>
+        <div class="mono ember" style="margin-top: 28px;">→ Six chapters follow. Each one is a number.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 COMPANY PROFILE -->
+<section class="sec alt" id="profile">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num it">02</div>
+      <div class="sec-eye">
+        <div class="label">M5V · The Operator</div>
+        <div class="title">We sell &amp; market aspirational real estate in the <span style="color: rgb(197, 32, 16);">Niagara</span> market</div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: start;">
+      <div class="rv rv-d1">
+        <p class="pull">89% of our purchasers are from Toronto where they expect high end dining &amp; are willing to spend. They are looking for an experience which only STK  can offer in the Region.</p>
+      </div>
+      <div class="rv rv-d2" style="aspect-ratio: 1070/1015; overflow: hidden; border: 1px solid var(--rule);"><img src="assets/sherard.png" alt="Sherard McQueen at STK Niagara Falls" style="width: 100%; height: 100%; object-fit: contain; display: block;"/></div>
+    </div>
+
+    <div style="margin-top: 100px;">
+      <div class="mono ember" style="margin-bottom: 18px;">
+</div>
+      <div class="rv rv-d3" style="border-top: 1px solid var(--rule);">
+        <div style="display: grid; grid-template-columns: 200px 200px 1fr; gap: 32px; padding: 24px 0; border-bottom: 1px solid var(--rule); align-items: baseline;">
+          <div class="serif" style="font-size: 56px; color: var(--ember); font-style: italic; line-height: 1;">89%</div>
+          <div class="serif" style="font-size: 32px; color: var(--ink-3); text-decoration: line-through; line-height: 1;">
+</div>
+          <div style="color: var(--ink-2);">Purchasers from Toronto or GTA</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 200px 200px 1fr; gap: 32px; padding: 24px 0; border-bottom: 1px solid var(--rule); align-items: baseline;">
+          <div class="serif" style="font-size: 25px; color: var(--ember); font-style: italic; line-height: 1">Higest Price Per Square Foot In the Region</div>
+          <div class="serif" style="font-size: 32px; color: var(--ink-3); text-decoration: line-through; line-height: 1;">
+</div>
+          <div style="color: var(--ink-2);">M5V Development sells our product for the highest price per square foot in the Region</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 32px; padding: 24px 0; border-bottom: 1px solid var(--rule); align-items: baseline;">
+          <div><div class="serif" style="font-size: 44px; color: var(--paper); line-height: 1;">232K<sup style="color: var(--ember); font-size: 0.5em;">+</sup></div><div class="mono muted" style="margin-top: 10px;">Instagram followers</div></div>
+          <div><div class="serif" style="font-size: 44px; color: var(--paper); line-height: 1;">70K<sup style="color: var(--ember); font-size: 0.5em;">+</sup></div><div class="mono muted" style="margin-top: 10px;">TikTok followers</div></div>
+          <div><div class="serif" style="font-size: 44px; color: var(--paper); line-height: 1;">2M<sup style="color: var(--ember); font-size: 0.5em;">+</sup></div><div class="mono muted" style="margin-top: 10px;">Monthly organic reach</div></div>
+          <div><div class="serif" style="font-size: 44px; color: var(--paper); line-height: 1;">50K<sup style="color: var(--ember); font-size: 0.5em;">+</sup></div><div class="mono muted" style="margin-top: 10px;">Owned buyer database</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 PORTFOLIO -->
+<section class="sec" id="portfolio">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num it">03</div>
+      <div class="sec-eye">
+        <div class="label">Active Niagara Portfolio</div>
+        <div class="title">Five communities,<br/><em>minutes</em> from STK.</div>
+      </div>
+    </div>
+
+    <div class="ptable rv rv-d1">
+      <div class="row head">
+        <div class="mono muted">#</div>
+        <div class="mono muted">Community</div>
+        <div class="mono muted">Type</div>
+        <div class="mono muted">Units</div>
+        <div class="mono muted" style="text-align: right;">To STK</div>
+      </div>
+      <div class="row"><div class="idx">01</div><div class="name">The Niagara Phase 1 (McLeod Road)</div><div class="type">Townhomes</div><div class="units">54</div><div class="prox">4 MIN</div></div>
+      <div class="row"><div class="idx">02</div><div class="name">The Niagara Phase 2 (Mcleod Road)</div><div class="type">Townhomes</div><div class="units">60</div><div class="prox">5 MIN</div></div>
+      <div class="row"><div class="idx">03</div><div class="name">The Niagara Phase 3 (McLeod Road)</div><div class="type">Townhomes</div><div class="units">147</div><div class="prox">5 MIN</div></div>
+      <div class="row"><div class="idx">04</div><div class="name">The Lundy (Lundy &amp; Garnder Rd)</div><div class="type">8 Storey Tower</div><div class="units">280</div><div class="prox">7 MIN</div></div>
+      <div class="row"><div class="idx">05</div><div class="name">Le Falls (Kalar Road)</div><div class="type">Freehold Towns</div><div class="units">113</div><div class="prox">7 MIN</div></div>
+    </div>
+
+    <div class="ribbon rv rv-d2" style="margin-top: 80px;">
+      <div class="copy">Five Communities sit within a five-to-seven minute drive of STK Niagara Falls.</div>
+      <div class="stamp">STK
+</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 DEMOGRAPHICS -->
+<section class="sec alt" id="demographics">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num it">04</div>
+      <div class="sec-eye">
+        <div class="label">Demographics</div>
+        <div class="title">The M5V buyer<br/>is STK's <em>ideal guest.</em></div>
+      </div>
+    </div>
+
+    <p class="pull rv rv-d1" style="max-width: 34ch; margin-bottom: 60px;">
+      Not an incidental match. <mark>A structural one.</mark>
+    </p>
+
+    <div class="demo-split rv rv-d2">
+      <div class="demo-col">
+        <h4>M5V Buyer Profile</h4>
+        <div class="row"><div class="trait">Household Income</div><div class="val">$150K – $300K+</div></div>
+        <div class="row"><div class="trait">Age Range</div><div class="val">25 – 54</div></div>
+        <div class="row"><div class="trait">Origin Market</div><div class="val">Greater Toronto Area</div></div>
+        <div class="row"><div class="trait">Lifestyle</div><div class="val">Upscale dining, travel, fitness</div></div>
+        <div class="row"><div class="trait">Purchase Intent</div><div class="val">Primary residence + investment</div></div>
+        <div class="row"><div class="trait">Decision Profile</div><div class="val">High-consideration, brand-aware</div></div>
+      </div>
+      <div class="demo-col">
+        <h4 style="color: var(--gold);">STK Target Guest</h4>
+        <div class="row"><div class="trait">Household Income</div><div class="val">$120K – $250K+</div></div>
+        <div class="row"><div class="trait">Age Range</div><div class="val">28 – 55</div></div>
+        <div class="row"><div class="trait">Origin Market</div><div class="val">Urban professionals / tourists</div></div>
+        <div class="row"><div class="trait">Lifestyle</div><div class="val">Upscale dining, events, celebrations</div></div>
+        <div class="row"><div class="trait">Purchase Intent</div><div class="val">Special occasions + regular dining</div></div>
+        <div class="row"><div class="trait">Decision Profile</div><div class="val">Experience-driven, value-conscious</div></div>
+      </div>
+    </div>
+
+    <div class="rv rv-d3" style="margin-top: 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;">
+      <div class="serif it" style="font-size: clamp(36px, 4.4vw, 64px); line-height: 1.05;">
+We are bringing STK regulars.</div>
+      <div style="border-top: 1px solid var(--ember); padding-top: 18px; color: var(--ink-2); line-height: 1.6; font-size: 17px;">Over 600 households, this effect compounds into a permanent, loyal customer cohort. Each closing is a behavioral anchor — STK becomes their default for occasions, client dinners, date nights.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 MEDIA VALUE -->
+<section class="sec paper-sec" id="media">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num it flat">05</div>
+      <div class="sec-eye" style="color: #14110d;">
+        <div class="label">Media Value</div>
+        <div class="title">What M5V's platform<br/>is <em>worth.</em></div>
+      </div>
+    </div>
+
+    <p class="rv rv-d1" style="font-family: var(--serif); font-style: italic; font-size: clamp(26px, 2.6vw, 38px); line-height: 1.35; max-width: 62ch; color: #14110d; margin-bottom: 56px;">
+      Industry-benchmarked rates. What a brand would pay to purchase equivalent reach.
+      <span class="oxblood">Our partnership offers this at zero cash cost to STK.</span>
+    </p>
+
+    <div class="money-grid rv rv-d2" style="border-bottom: 1px solid #beb29a;">
+      <div class="money-cell" style="border-color: #beb29a;"><div class="item">Dedicated IG feed post</div><div class="aud" style="color: #6b614e;">232K audience</div></div>
+      <div class="money-cell" style="border-color: #beb29a;"><div class="price">$2,500–$5,000</div></div>
+      <div class="money-cell" style="border-color: #beb29a;"><div class="basis" style="color: #6b614e;">HypeAuditor 2024, macro-influencer tier</div></div>
+
+      <div class="money-cell" style="border-color: #beb29a;"><div class="item">IG Story set (5-frame)</div><div class="aud" style="color: #6b614e;">Organic + event</div></div>
+      <div class="money-cell" style="border-color: #beb29a;"><div class="price">$800–$1,500</div></div>
+      <div class="money-cell" style="border-color: #beb29a;"><div class="basis" style="color: #6b614e;">Creator IQ benchmark · real estate vertical</div></div>
+
+      <div class="money-cell" style="border-color: #beb29a;"><div class="item">TikTok dedicated video</div><div class="aud" style="color: #6b614e;">70K audience</div></div>
+      <div class="money-cell" style="border-color: #beb29a;"><div class="price">$1,000–$3,000</div></div>
+      <div class="money-cell" style="border-color: #beb29a;"><div class="basis" style="color: #6b614e;">Influencer Marketing Hub TikTok rate guide</div></div>
+
+      <div class="money-cell" style="border-color: #beb29a;"><div class="item">Email blast</div><div class="aud" style="color: #6b614e;">50K+ buyer database</div></div>
+      <div class="money-cell" style="border-color: #beb29a;"><div class="price">$1,500–$4,000</div></div>
+      <div class="money-cell" style="border-color: #beb29a;"><div class="basis" style="color: #6b614e;">Klaviyo B2C · $30–80 CPM verified list</div></div>
+
+      <div class="money-cell" style="border-color: #beb29a;"><div class="item">Event co-brand mention</div><div class="aud" style="color: #6b614e;">On-site · 100 guests</div></div>
+      <div class="money-cell" style="border-color: #beb29a;"><div class="price">$2,000–$3,500</div></div>
+      <div class="money-cell" style="border-color: #beb29a;"><div class="basis" style="color: #6b614e;">Industry hospitality co-sponsorship</div></div>
+    </div>
+
+    <div class="money-total rv rv-d3" style="border-color: var(--oxblood);">
+      <div><div class="lbl" style="color: #14110d;">Total monthly</div><div style="font-family: var(--mono); font-size: 11px; color: #6b614e; margin-top: 6px; letter-spacing: 0.18em; text-transform: uppercase;">Minimum deliverable set</div></div>
+      <div><div class="sum" style="color: var(--oxblood);">$10K – $22K</div></div>
+      <div><div class="note" style="color: #6b614e;">3 posts + 2 stories + 1 TikTok + 1 email blast<br/>Every month. Permanent.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 STRUCTURE -->
+<section class="sec" id="partnership">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num it">06</div>
+      <div class="sec-eye">
+        <div class="label">Partnership Structure</div>
+        <div class="title">Alignment. 
+ do this for the region
+</div>
+      </div>
+    </div>
+
+    <div class="deal-grid rv rv-d1">
+      <div class="deal-col left">
+        <h4>M5V Delivers to STK</h4>
+        <div class="item"><div class="t">Dedicated IG feed Collab post featuring STK</div><div class="v" style="color: rgb(197, 32, 16)">2× / mo</div></div>
+        <div class="item"><div class="t">IG Stories featuring STK</div><div class="v">1 × / mo</div></div>
+        <div class="item"><div class="t">TikTok featuring STK event content</div><div class="v">1× / mo</div></div>
+        <div class="item"><div class="t">Email blast to buyer database</div><div class="v">1× / mo</div></div>
+        <div class="item"><div class="t">Event co-branding · closings &amp; launches</div><div class="v">Per event</div></div>
+      </div>
+      <div class="deal-col right">
+        <h4>STK Delivers to M5V</h4>
+        <div class="item"><div class="t">Official Event Venue designation, Niagara</div><div class="v">→</div></div>
+        <div class="item"><div class="t"> Preferred pricing with 50%  reduction on F&amp;B</div><div class="v">→</div></div>
+        <div class="item"><div class="t">Dedicated event liaison</div><div class="v">→</div></div>
+        <div class="item"><div class="t">Provide special incentives for our email database </div><div class="v">→</div></div>
+        <div class="item"><div class="t">Merch or physical item to be included for all new home closings</div><div class="v">→</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 07 IG STATS + OPERATOR -->
+<section class="sec alt" id="ig-stats">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num it">07</div>
+      <div class="sec-eye">
+        <div class="label">The Platform · @m5vdevelopments</div>
+        <div class="title">Velocity. Locality.<br/>The <em>buyer</em> at STK's door.</div>
+      </div>
+    </div>
+
+    <p class="rv rv-d1" style="font-family: var(--serif); font-style: italic; font-size: clamp(24px, 2.4vw, 34px); line-height: 1.35; color: var(--ink-2); max-width: 64ch; margin-bottom: 64px;">
+      Raw Instagram analytics. Not vanity — the audience composition that maps directly to STK's local-buyer ambition.
+    </p>
+
+    <div class="stat-strip rv rv-d2" style="margin-bottom: 72px;">
+      <div class="stat-cell"><div class="big">232<sup>K+</sup></div><div class="lbl">Total Followers · IG</div></div>
+      <div class="stat-cell"><div class="big">1.9<sup>K</sup></div><div class="lbl">New Followers · 30 Days</div></div>
+      <div class="stat-cell"><div class="big">527<sup>K</sup></div><div class="lbl">Views · 30 Days</div></div>
+      <div class="stat-cell"><div class="big">26.3<sup>K</sup></div><div class="lbl">Interactions · 30 Days</div></div>
+    </div>
+
+    <div class="rv rv-d2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--rule); margin-bottom: 64px;">
+      <div style="padding: 36px 32px; border-right: 1px solid var(--rule);">
+        <div class="mono ember" style="margin-bottom: 28px;">Gender Split</div>
+        <div style="margin-bottom: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px;"><span class="serif" style="font-size: 22px;">Men</span><span class="serif it ember" style="font-size: 32px;">73.6%</span></div>
+          <div style="height: 8px; background: var(--bg-3); position: relative;"><div style="position: absolute; inset: 0 26.4% 0 0; background: var(--ember);"></div></div>
+        </div>
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px;"><span class="serif" style="font-size: 22px;">Women</span><span class="serif it gold" style="font-size: 32px;">26.4%</span></div>
+          <div style="height: 8px; background: var(--bg-3); position: relative;"><div style="position: absolute; inset: 0 73.6% 0 0; background: var(--gold);"></div></div>
+        </div>
+        <div class="muted" style="margin-top: 22px; font-size: 14px; line-height: 1.5;">Male-skewed, decision-maker demographic — STK's core occasion-diner.</div>
+      </div>
+
+      <div style="padding: 36px 32px; background: var(--bg-3);">
+        <div class="mono gold" style="margin-bottom: 28px;">Most Active Hours · Audience</div>
+        <div style="display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; align-items: end; height: 140px;">
+          <div style="background: var(--ember); height: 38%;"></div>
+          <div style="background: var(--ember); height: 22%;"></div>
+          <div style="background: var(--ember); height: 30%;"></div>
+          <div style="background: var(--ember); height: 70%;"></div>
+          <div style="background: var(--ember); height: 92%;"></div>
+          <div style="background: var(--ember); height: 88%;"></div>
+          <div style="background: var(--ember); height: 86%;"></div>
+          <div style="background: var(--ember); height: 80%;"></div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; margin-top: 10px; font-family: var(--mono); font-size: 9.5px; color: var(--ink-3); letter-spacing: 0.12em;">
+          <span>12A</span><span>3A</span><span>6A</span><span>9A</span><span>12P</span><span>3P</span><span>6P</span><span>9P</span>
+        </div>
+        <div class="muted" style="margin-top: 22px; font-size: 14px; line-height: 1.5;">Peak engagement <span class="gold">12pm–9pm</span> — STK's lunch, happy hour, and dinner windows.</div>
+      </div>
+    </div>
+
+    <div class="rv rv-d2" style="padding: 36px 32px; border: 1px solid var(--rule); margin-bottom: 64px;">
+      <div class="mono ember" style="margin-bottom: 22px;">Age Range</div>
+      <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 32px;">
+        <div><div class="serif" style="font-size: 40px; color: var(--paper); line-height: 1;">2.1%</div><div class="mono muted" style="margin-top: 8px;">18–24</div></div>
+        <div><div class="serif it ember" style="font-size: 56px; line-height: 1;">42.8%</div><div class="mono gold" style="margin-top: 8px;">25–34</div></div>
+        <div><div class="serif it ember" style="font-size: 56px; line-height: 1;">29.1%</div><div class="mono gold" style="margin-top: 8px;">35–44</div></div>
+        <div><div class="serif it ember" style="font-size: 48px; line-height: 1;">13.3%</div><div class="mono gold" style="margin-top: 8px;">45–54</div></div>
+        <div><div class="serif" style="font-size: 40px; color: var(--paper); line-height: 1;">12.6%</div><div class="mono muted" style="margin-top: 8px;">55+</div></div>
+      </div>
+      <div class="muted" style="margin-top: 22px; font-size: 14px; line-height: 1.5;"><span class="gold">85.2%</span> of the audience sits in the 25–54 prime spend bracket — homebuyers and steakhouse regulars in one cohort.</div>
+    </div>
+
+    <div class="rv rv-d3" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--rule); margin-bottom: 80px;">
+      <div style="padding: 36px 32px; border-right: 1px solid var(--rule);">
+        <div class="mono ember" style="margin-bottom: 28px;">Top Country</div>
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px;"><span class="serif" style="font-size: 24px;">Canada</span><span class="serif it ember" style="font-size: 36px;">29.9%</span></div>
+        <div style="height: 10px; background: var(--bg-3); position: relative; margin-bottom: 28px;"><div style="position: absolute; inset: 0 70.1% 0 0; background: var(--ember);"></div></div>
+        <div class="muted" style="font-size: 14px; line-height: 1.5;">Nearly 1 in 3 followers is Canadian — the single largest national cohort. The local-buyer pipeline STK is hunting for.</div>
+      </div>
+      <div style="padding: 36px 32px; background: var(--bg-3);">
+        <div class="mono gold" style="margin-bottom: 28px;">Top Cities · GTA → Niagara</div>
+        <div style="display: grid; gap: 14px;">
+          <div><div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;"><span class="serif" style="font-size: 18px;">Toronto</span><span class="serif it gold" style="font-size: 22px;">5.8%</span></div><div style="height: 6px; background: var(--bg-2);"><div style="height: 100%; width: 100%; background: var(--gold);"></div></div></div>
+          <div><div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;"><span class="serif" style="font-size: 18px;">Brampton</span><span class="serif it gold" style="font-size: 22px;">2.3%</span></div><div style="height: 6px; background: var(--bg-2);"><div style="height: 100%; width: 39%; background: var(--gold);"></div></div></div>
+          <div><div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;"><span class="serif" style="font-size: 18px;">Mississauga</span><span class="serif it gold" style="font-size: 22px;">1.5%</span></div><div style="height: 6px; background: var(--bg-2);"><div style="height: 100%; width: 26%; background: var(--gold);"></div></div></div>
+          <div><div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;"><span class="serif" style="font-size: 18px;">Montreal</span><span class="serif it gold" style="font-size: 22px;">1.2%</span></div><div style="height: 6px; background: var(--bg-2);"><div style="height: 100%; width: 21%; background: var(--gold);"></div></div></div>
+        </div>
+        <div class="muted" style="margin-top: 22px; font-size: 14px; line-height: 1.5;">Toronto, Brampton, Mississauga — GTA, driveable to Niagara on a Friday night.</div>
+      </div>
+    </div>
+
+    <div class="rv rv-d3" style="border-top: 2px solid var(--ember); padding-top: 56px; display: grid; grid-template-columns: 1fr 1.4fr; gap: 56px; align-items: start;">
+      <div>
+        <div class="mono ember" style="margin-bottom: 16px;">The Operator</div>
+        <h3 class="serif" style="font-size: clamp(40px, 5vw, 72px); line-height: 0.95; letter-spacing: -0.02em;">
+          Sherard<br/>R. <span class="it ember">McQueen.</span>
+        </h3>
+        <div class="mono muted" style="margin-top: 18px;">CVO &middot; M5V Developments</div>
+      </div>
+      <div>
+        <p class="serif it" style="font-size: clamp(22px, 2.2vw, 30px); line-height: 1.35; color: var(--paper); margin-bottom: 32px;">
+          A <span class="ember">$3B</span> career in residential real estate sales &amp; marketing — built by a Buffalo-born, Toronto-raised operator who knows this region the way an STK regular knows the menu.
+        </p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 1px solid var(--rule);">
+          <div style="padding: 22px 24px 22px 0; border-bottom: 1px solid var(--rule);">
+            <div class="mono muted">Career Sales Volume</div>
+            <div class="serif" style="font-size: 26px; margin-top: 6px;">$3 Billion+ <span class="muted" style="font-size: 14px;">residential</span></div>
+          </div>
+          <div style="padding: 22px 0 22px 24px; border-left: 1px solid var(--rule); border-bottom: 1px solid var(--rule);">
+            <div class="mono muted">Education</div>
+            <div class="serif" style="font-size: 22px; margin-top: 6px;">York University<br/><span class="muted" style="font-size: 14px;">B.A. Psychology</span></div>
+          </div>
+          <div style="padding: 22px 24px 22px 0; border-bottom: 1px solid var(--rule);">
+            <div class="mono muted">Credential</div>
+            <div class="serif" style="font-size: 22px; margin-top: 6px;">Harvard-Certified<br/><span class="muted" style="font-size: 14px;">Negotiation</span></div>
+          </div>
+          <div style="padding: 22px 0 22px 24px; border-left: 1px solid var(--rule); border-bottom: 1px solid var(--rule);">
+            <div class="mono muted">Region</div>
+            <div class="serif" style="font-size: 22px; margin-top: 6px;">Buffalo &rarr; Toronto<br/><span class="muted" style="font-size: 14px;">Local to the corridor</span></div>
+          </div>
+        </div>
+        <p class="muted" style="font-size: 15px; line-height: 1.6; margin-top: 28px;">
+          The platform isn't a side project &mdash; it's a behavioral-economics instrument run by a psychology grad and trained negotiator who has placed billions of dollars of product in front of exactly the customer STK Niagara Falls is built for.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 THE ASK -->
+<section class="sec" id="ask">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num it">08</div>
+      <div class="sec-eye">
+        <div class="label">THE OFFER</div>
+        <div class="title">A designation.<br/>Preferred access. <em> &amp; STK</em></div>
+      </div>
+    </div>
+
+    <p class="rv rv-d1" style="font-family: var(--serif); font-style: italic; font-size: clamp(24px, 2.4vw, 36px); line-height: 1.35; max-width: 66ch; color: var(--ink-2); margin-bottom: 80px;">No marketing spend. No exclusivity. A partnership designation and preferred access in exchange for sustained, high-value promotional activity in front of 302,000 followers and 50,000+ qualified homebuyers. One Year agreement mutually renewable.</p>
+
+    <div class="ask-grid rv rv-d2">
+      <div class="ask-card"><div class="n it">01</div><div class="t">Official designation as M5V's Preferred Event Venue, Niagara.</div></div>
+      <div class="ask-card"><div class="n it">02</div><div class="t">50% reduction on F&amp;B; minimums for all M5V-booked events.</div></div>
+      <div class="ask-card"><div class="n it">03</div><div class="t">A dedicated event contact at STK for direct booking access.</div></div>
+      <div class="ask-card"><div class="n it">04</div><div class="t">STK Merch or physical products to provide Purchasers at the time of closing to reinforce our initiative.</div></div>
+      <div class="ask-card"><div class="n it">05</div><div class="t">Curate exclusive offers for purchase in our M5V projects
+
+</div></div>
+      <div class="ask-card"><div class="n it">06</div><div class="t">STK co-branding featured in M5V event materials and promotional content.</div></div>
+    </div>
+
+    <div class="ribbon rv rv-d3" style="margin-top: 80px; background: var(--ember);">
+      <div class="copy" style="color: var(--bg);">
+        In exchange, M5V commits to a minimum of <strong style="color: var(--bg); background: var(--paper); padding: 0 8px;">$10,000/month</strong> in equivalent earned media, plus all confirmed event revenue booked exclusively at STK.
+      </div>
+      <div class="stamp" style="border-color: var(--bg); color: var(--bg);">Equiv. media<span class="big" style="color: var(--bg);">$120K/yr</span></div>
+    </div>
+
+    <div class="rv rv-d4" style="margin-top: 100px;">
+      <div class="mono muted" style="margin-bottom: 22px;">Proposed Next Steps</div>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
+        <div style="border-top: 2px solid var(--ember); padding-top: 14px;"><div class="serif it ember" style="font-size: 34px; line-height: 1;">i.</div><div class="serif" style="font-size: 22px; margin-top: 12px; line-height: 1.2;">30-min meeting</div><div class="muted" style="margin-top: 8px; font-size: 14px;">M5V leadership and STK marketing align on format.</div></div>
+        <div style="border-top: 2px solid var(--ember); padding-top: 14px;"><div class="serif it ember" style="font-size: 34px; line-height: 1;">ii.</div><div class="serif" style="font-size: 22px; margin-top: 12px; line-height: 1.2;">One-page MOU</div><div class="muted" style="margin-top: 8px; font-size: 14px;">Designation, rates, content. No legal complexity.</div></div>
+        <div style="border-top: 2px solid var(--ember); padding-top: 14px;"><div class="serif it ember" style="font-size: 34px; line-height: 1;">iii.</div><div class="serif" style="font-size: 22px; margin-top: 12px; line-height: 1.2;">Create Special Offer for Purchasers</div><div class="muted" style="margin-top: 8px; font-size: 14px;">Merch or offers for new and current buyers</div></div>
+        <div style="border-top: 2px solid var(--ember); padding-top: 14px;"><div class="serif it ember" style="font-size: 34px; line-height: 1;">iv.</div><div class="serif" style="font-size: 22px; margin-top: 12px; line-height: 1.2;">June 2026 event</div><div class="muted" style="margin-top: 8px; font-size: 14px;">Closing event confirmed at STK, brief within five days.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING BAND -->
+<section class="closing-band">
+  <div class="wrap">
+    <div class="mono" style="color: #6b614e; margin-bottom: 24px;">— Closing line</div>
+    <div class="big">STK, we want<br/>to be <em class="it">your people.</em></div>
+    <div class="mono" style="color: #6b614e; margin-top: 36px;">Sherard McQueen · Managing Partner, M5V Developments · @m5vdevelopments</div>
+  </div>
+</section>
+
+<!-- SIGNOFF -->
+<section class="signoff">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <div class="logo-pair" style="margin-bottom: 36px;">
+          <span class="logo-tile m5v" style="height: 64px;"><img src="data:image/jpeg;base64,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" alt="M5V"></span>
+          <span style="color: var(--ember); font-family: var(--serif); font-style: italic; font-size: 44px; line-height: 1;">×</span>
+          <span class="logo-tile stk" style="height: 64px;"><img src="data:image/png;base64,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" alt="STK"></span>
+        </div>
+        <div class="serif name">Let's <span class="it" style="color: var(--ember);">talk.</span></div>
+      </div>
+      <div style="border-top: 1px solid var(--ember); padding-top: 22px;">
+        <div class="mono muted">Prepared by</div>
+        <div class="serif" style="font-size: 36px; line-height: 1.1; margin-top: 8px;">Sherard McQueen</div>
+        <div class="role">Managing Partner &amp; Chief Visionary Officer</div>
+        <div class="mono muted" style="margin-top: 22px;">M5V Developments · Toronto · Niagara</div>
+        <div class="mono muted" style="margin-top: 4px;">@m5vdevelopments · 232K IG · 70K TikTok</div>
+      </div>
+    </div>
+    <hr/>
+    <div class="footer-row">
+      <span>M5V × STK · Confidential Partnership Proposal · 2026</span>
+      <span>09 / 09</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Topbar scroll
+  const tb = document.getElementById('top');
+  addEventListener('scroll', () => tb.classList.toggle('on', scrollY > 24), { passive: true });
+
+  // Reveal observer
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+  // Counter animation
+  const cio = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const target = +el.dataset.count;
+      let t0;
+      const start = performance.now();
+      const dur = 1500;
+      const step = (now) => {
+        const p = Math.min(1, (now - start) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased).toLocaleString();
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+      cio.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
+
+</script>
+
+</body>
+</html>

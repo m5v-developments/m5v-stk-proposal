@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M5V × STK — Niagara Partnership Proposal</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Serif+Display:ital@0;1&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Manrope:wght@200;300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* defaults — overridden by Tweaks */
+      --display-font: 'Cormorant Garamond', serif;
+      --body-font: 'Manrope', system-ui, sans-serif;
+      --mono-font: 'JetBrains Mono', monospace;
+
+      /* Light palette — bone, espresso, oxblood */
+      --bg: #efe9dc;
+      --bg-2: #e6dfcf;
+      --bg-3: #d9d1bd;
+      --ink: #1a1612;
+      --ink-2: #3a3127;
+      --ink-3: #6b5f4f;
+      --rule: #c9bfa9;
+      --accent: #7a1f1a;
+      --accent-2: #c8662a;
+      --paper-shadow: rgba(26, 22, 18, 0.08);
+    }
+
+    [data-theme="dark"] {
+      --bg: #14110d;
+      --bg-2: #1c1814;
+      --bg-3: #2a241c;
+      --ink: #ece5d4;
+      --ink-2: #c9bfa9;
+      --ink-3: #897e6a;
+      --rule: #3a3127;
+      --accent: #d6612b;
+      --accent-2: #e3a861;
+      --paper-shadow: rgba(0, 0, 0, 0.4);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--body-font);
+      font-weight: 400;
+      font-size: 17px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    /* Typography rhythm */
+    .display { font-family: var(--display-font); font-weight: 400; line-height: 0.95; letter-spacing: -0.015em; }
+    .display-italic { font-family: var(--display-font); font-style: italic; font-weight: 400; }
+    .mono { font-family: var(--mono-font); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; }
+    .sans { font-family: var(--body-font); }
+    .eyebrow {
+      font-family: var(--mono-font);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+    }
+
+    .accent { color: var(--accent); }
+    .rule { border: 0; border-top: 1px solid var(--rule); }
+    .rule-thick { border: 0; border-top: 2px solid var(--ink); }
+
+    /* Layout */
+    .wrap {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 0 64px;
+    }
+    @media (max-width: 900px) { .wrap { padding: 0 28px; } }
+
+    section { position: relative; }
+
+    /* Top nav */
+    .topnav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 50;
+      padding: 18px 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: color-mix(in oklab, var(--bg) 80%, transparent);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .topnav.scrolled { border-bottom-color: var(--rule); }
+    .topnav .brand {
+      font-family: var(--display-font);
+      font-size: 22px;
+      letter-spacing: -0.01em;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .topnav .brand .x { color: var(--accent); font-style: italic; padding: 0 2px; font-size: 24px; }
+    .logo-chip {
+      display: inline-flex; align-items: center; justify-content: center;
+      height: 34px; padding: 4px 8px;
+    }
+    .logo-chip img { display: block; height: 100%; width: auto; object-fit: contain; }
+    .logo-chip.m5v { background: #ffffff; }
+    .logo-chip.stk { background: #000000; }
+
+    /* Magazine masthead — logos as integrated marks */
+    .masthead { border-top: 2px solid var(--ink); border-bottom: 1px solid var(--rule); padding: 22px 0 26px; }
+    .mh-edge { display: flex; justify-content: space-between; margin-bottom: 22px; }
+    .mh-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+    .mh-mark { display: flex; align-items: center; gap: 22px; min-width: 0; }
+    .mh-left { justify-content: flex-start; }
+    .mh-right { justify-content: flex-end; }
+    .logo-mark {
+      display: inline-flex; align-items: center; justify-content: center;
+      height: clamp(72px, 9vw, 120px);
+      flex-shrink: 0;
+    }
+    .logo-mark img { display: block; height: 100%; width: auto; object-fit: contain; }
+    .logo-mark.m5v { background: #ffffff; padding: 8px 14px; }
+    .logo-mark.stk { background: #000000; padding: 10px 16px; }
+    .mh-meta { min-width: 0; }
+    .mh-meta-r { text-align: right; }
+    .mh-name { font-family: var(--display-font); font-size: clamp(24px, 2.2vw, 36px); line-height: 1.05; letter-spacing: -0.01em; }
+    .mh-cross { text-align: center; }
+    @media (max-width: 900px) {
+      .mh-row { grid-template-columns: 1fr; gap: 16px; }
+      .mh-mark { justify-content: center !important; }
+      .mh-meta, .mh-meta-r { text-align: center; }
+    }
+    .topnav nav { display: flex; gap: 28px; }
+    .topnav nav a {
+      font-family: var(--mono-font);
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+      text-decoration: none;
+      padding: 4px 0;
+      border-bottom: 1px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .topnav nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+    .topnav .cta {
+      font-family: var(--mono-font);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--ink);
+      padding: 10px 18px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .topnav .cta:hover { background: var(--accent); }
+    @media (max-width: 900px) {
+      .topnav { padding: 14px 24px; }
+      .topnav nav { display: none; }
+    }
+
+    /* Reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.9s cubic-bezier(.2,.7,.2,1), transform 0.9s cubic-bezier(.2,.7,.2,1); }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: 0.05s; }
+    .reveal-d2 { transition-delay: 0.12s; }
+    .reveal-d3 { transition-delay: 0.2s; }
+    .reveal-d4 { transition-delay: 0.28s; }
+    .reveal-d5 { transition-delay: 0.36s; }
+    .reveal-d6 { transition-delay: 0.44s; }
+
+    /* Striped placeholder */
+    .placeholder {
+      position: relative;
+      background:
+        repeating-linear-gradient(45deg,
+          var(--bg-2) 0 14px,
+          var(--bg-3) 14px 28px);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .placeholder .lbl {
+      font-family: var(--mono-font);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+      background: var(--bg);
+      padding: 7px 12px;
+      border: 1px solid var(--rule);
+    }
+
+    /* Section headers */
+    .section-no {
+      font-family: var(--mono-font);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 28px;
+    }
+    .section-no::before {
+      content: '';
+      width: 28px; height: 1px;
+      background: var(--ink-3);
+    }
+    .section-title {
+      font-family: var(--display-font);
+      font-size: clamp(48px, 6vw, 92px);
+      font-weight: 400;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
+    }
+
+    /* Buttons / inline */
+    .marker {
+      display: inline-block;
+      padding: 2px 8px;
+      background: var(--accent);
+      color: var(--bg);
+      font-family: var(--mono-font);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    /* Selection */
+    ::selection { background: var(--accent); color: var(--bg); }
+  </style>
+</head>
+<body data-theme="light">
+
+  <!-- TWEAKS DEFAULTS -->
+  <script>
+    window.__TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+      "theme": "dark",
+      "headlineFont": "Cormorant Garamond",
+      "accent": "#7a1f1a"
+    }/*EDITMODE-END*/;
+  </script>
+
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="data.jsx"></script>
+  <script type="text/babel" src="sections.jsx"></script>
+  <script type="text/babel" src="app-sections.jsx"></script>
+  <script type="text/babel" src="app.jsx"></script>
+</body>
+</html>
